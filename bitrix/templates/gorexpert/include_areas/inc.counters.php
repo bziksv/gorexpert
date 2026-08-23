@@ -31,16 +31,6 @@
 </script>
 
 <!-- /Yandex.Metrika counter -->
-<!--LiveInternet counter--><script type="text/javascript"><!--
-document.write("<a href='http://www.liveinternet.ru/click' "+
-"target=_blank><img src='https://counter.yadro.ru/hit?t24.7;r"+
-escape(document.referrer)+((typeof(screen)=="undefined")?"":
-";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth?
-screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
-";"+Math.random()+
-"' alt='' title='LiveInternet: показано число посетителей за"+
-" сегодня' "+
-"border=0 width=88 height=15><\/a>")//--></script><!--/LiveInternet-->
 
 <!-- Rating Mail.ru counter -->
 <script type="text/javascript">
@@ -61,6 +51,17 @@ _tmr.push({id: "3145400", type: "pageView", start: (new Date()).getTime()});
 <a href="https://top.mail.ru/jump?from=3145400">
 <img src="https://top-fwz1.mail.ru/counter?id=3145400;t=479;l=1" style="border:0;" height="31" width="88" alt="Top.Mail.Ru" /></a>
 <!-- //Rating Mail.ru logo -->
+
+<!--LiveInternet counter--><script type="text/javascript"><!--
+document.write("<a href='http://www.liveinternet.ru/click' "+
+"target=_blank><img src='https://counter.yadro.ru/hit?t24.7;r"+
+escape(document.referrer)+((typeof(screen)=="undefined")?"":
+";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth?
+screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
+";"+Math.random()+
+"' alt='' title='LiveInternet: показано число посетителей за"+
+" сегодня' "+
+"border=0 width=88 height=15><\/a>")//--></script><!--/LiveInternet-->
 
 <!-- Top100 (Kraken) Widget -->
 <span id="top100_widget"></span>
