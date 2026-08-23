@@ -54,7 +54,8 @@ _tmr.push({id: "3145400", type: "pageView", start: (new Date()).getTime()});
 
 <!--LiveInternet counter-->
 <a href="https://www.liveinternet.ru/click" target="_blank" rel="nofollow">
-<img id="licntGorexpert" width="88" height="31" style="border:0;" title="LiveInternet: показано число посетителей за сегодня" src="https://counter.yadro.ru/hit?t14.1" alt="LiveInternet" />
+<img src="https://counter.yadro.ru/logo?52.6" width="88" height="31" style="border:0;" title="LiveInternet: показано число просмотров и посетителей за 24 часа" alt="LiveInternet" />
+<img id="licntGorexpert" src="https://counter.yadro.ru/hit?t52.6" width="1" height="1" style="border:0;position:absolute;left:-9999px;" alt="" />
 </a>
 <script type="text/javascript">
 (function (d) {
@@ -62,7 +63,7 @@ _tmr.push({id: "3145400", type: "pageView", start: (new Date()).getTime()});
 	if (!img) {
 		return;
 	}
-	img.src = 'https://counter.yadro.ru/hit?t14.1;r' + escape(d.referrer) +
+	img.src = 'https://counter.yadro.ru/hit?t52.6;r' + escape(d.referrer) +
 		(typeof(screen) === 'undefined' ? '' :
 		';s' + screen.width + '*' + screen.height + '*' + (screen.colorDepth ? screen.colorDepth : screen.pixelDepth)) +
 		';u' + escape(d.location.href) + ';' + Math.random();
