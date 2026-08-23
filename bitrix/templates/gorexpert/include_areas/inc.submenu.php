@@ -1,0 +1,1 @@
+<a href="/sitemap/">Карта сайта</a>&nbsp;&nbsp;&nbsp;<a href="/contacts/#feedback">Обратная связь</a>&nbsp;&nbsp;&nbsp;<a href="/contacts/map.php" class="showmap fancybox.iframe dotted">Схема проезда</a>

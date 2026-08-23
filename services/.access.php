@@ -1,0 +1,3 @@
+<?
+$PERM["otsenka-avtomobilya"]["*"]="X";
+?>

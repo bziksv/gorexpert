@@ -1,0 +1,74 @@
+# =============================================================================
+# gorexpert.ru — Bitrix .gitignore
+# bitrix/modules/ — в git (кастомные модули v1rt.*, niges.*, arturgolubev.*)
+# =============================================================================
+
+# --- Cursor (локально, не в репозиторий) ---
+.cursorignore
+.cursor/*
+!.cursor/rules/
+!.cursor/rules/**
+
+# --- Секреты и конфиги (обязательно) ---
+bitrix/license_key.php
+bitrix/.settings.php
+bitrix/.settings_extra.php
+bitrix/php_interface/dbconn.php
+bitrix/php_interface/dbconn.local.php
+.env
+.env.*
+
+# --- Кэш и временные каталоги Bitrix ---
+bitrix/cache/
+bitrix/managed_cache/
+bitrix/stack_cache/
+bitrix/html_pages/
+bitrix/tmp/
+bitrix/backup/
+bitrix/catalog_export/
+bitrix/updates/
+upload/tmp/
+
+# --- Пользовательские файлы / медиа ---
+upload/
+
+# --- Логи ---
+*.log
+logs/
+pathLog.txt
+log_*.txt
+bitrix/modules/*.dat
+bitrix/modules/updater*.log
+bitrix/modules/updater_partner.log
+bitrix/modules/updater_versions.php
+bitrix/modules/*.zip
+bitrix/modules/*.tar.gz
+
+# --- Sitemap и XML-выгрузки ---
+sitemap*.xml
+~2sitemap*.xml
+
+# --- IDE / OS ---
+.idea/
+.vscode/
+.DS_Store
+.osp/
+
+# --- Верификация поисковиков ---
+yandex_*
+google*
+mailru-*
+cmsmagazine*
+yamail-*
+
+# --- Дампы, архивы ---
+*.sql
+*.sql.gz
+*.tar.gz
+*.zip
+*.rar
+
+# --- Локальная разработка (Mac) ---
+.local/run/
+.local/backup/
+.local/db.env

@@ -1,0 +1,4 @@
+table.feedback {width: 100%;}
+table.feedback td {padding-bottom: 10px;}
+table.feedback input[type="text"], table.feedback textarea {width:330px; font-family: Arial; padding: 2px;}
+div.mf-ok-text {color:green; font-weight:bold; padding-bottom: 1em;}

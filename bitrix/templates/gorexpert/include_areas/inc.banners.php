@@ -1,0 +1,1 @@
+<a class="left-banner2" href="/online-zajavka/"><img src="/bitrix/templates/gorexpert/images/banner_1.jpg" class="left-banner"></a>

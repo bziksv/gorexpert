@@ -1,0 +1,742 @@
+.img-r {float:right;margin:0 0 10px 15px;max-width:210px;}
+.img-l, .img-l2 {float:left;margin:0 15px 10px 0;max-width:210px;}
+.img-r-big, .img-l-big{width:390px;max-width:100%;}
+.img-open {}
+a.link-open {}
+.clear {clear: both;}
+	.tag_menu_all {
+		display:flex !important;
+		height: 35px;
+		overflow: hidden;
+}
+.tag_menu_all  .podrazdel__link {
+color: #0497C0;
+    border: #0497C0 solid 1px;
+    padding: 4px 20px;
+    border-radius: 5px;
+    display: inline-block;
+    margin: 5px 7px;
+    white-space: nowrap;
+}
+	.tag_menu_all .podrazdel__link:hover {
+background: #0060bf;
+    color: #fff !important;
+	}.is-act-sm{
+		display:flex !important;
+		height: 35px;
+		overflow: hidden;
+}
+	.is-act-sm-c {
+display:flex !important;
+		height: auto;
+		overflow: none;
+}
+	.tag_menu_all .podrazdel__link:hover{
+		color: #fff;
+	}
+.tag_menu_all .podrazdel__link span{
+ display: inline-block;
+width: auto;
+}
+.navi {
+    text-align: right;
+    margin-top: -25px;
+    margin-bottom: 20px;
+    z-index: 31;
+    position: relative;
+    margin-top: 10px;
+}
+.navi span.is-act {
+    display: inline-block;
+}
+
+.navi span {
+    color: #0497C0;
+    border-bottom: #0497C0 solid 1px;
+    cursor: pointer;
+    display: none;
+}
+
+/* ====================== */
+/* SEO СТИЛИ 2025 */
+/* ====================== */
+
+/* Блок с выделением текста — серая подложка со скругленными краями */
+.seo-highlight-box {
+    background-color: #f5f5f5;
+    border-radius: 30px;
+    margin: 20px 0; /* вертикальные отступы, горизонтальные — 0 для адаптивности */
+    padding: 20px;
+    position: relative;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05); /* легкая тень для глубины */
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+    .seo-highlight-box {
+        border-radius: 20px; /* чуть меньше скругление на мобильных */
+        padding: 15px; /* меньше отступы для компактности */
+        margin: 15px 0;
+    }
+}
+
+/* Дополнительные улучшения */
+.seo-highlight-box p {
+    margin: 0; /* убираем дефолтные отступы у параграфов */
+    line-height: 1.6; /* улучшаем читаемость */
+}
+
+.seo-highlight-box p + p {
+    margin-top: 12px; /* отступ между параграфами внутри блока */
+}
+
+/* Блок для важных предупреждений */
+.seo-highlight-box {
+    background-color: #f5f5f5;
+    border-radius: 30px;
+    margin: 20px 0;
+    padding: 20px;
+    position: relative;
+}
+
+.seo-highlight-box--important {
+    border: 2px solid #0497C0;
+    background-color: #eef7fc;
+}
+
+
+/* ====================== */
+/* СПИСОК PDF ОТЧЕТОВ */
+/* ====================== */
+
+/* Обертка списка */
+.seo-pdf-list {
+    margin: 30px 0;
+    padding: 0 15px; /* отступы по бокам для адаптивности */
+}
+
+/* Каждая карточка с файлом */
+.seo-pdf-card {
+    background: white;
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    text-decoration: none !important;
+    color: #333 !important;
+    border: 1px solid #f0f0f0;
+}
+
+/* Эффект при наведении */
+.seo-pdf-card:hover {
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
+    border-color: #e0e0e0;
+}
+
+/* Иконка PDF */
+.seo-pdf-icon {
+    width: 28px;
+    height: 28px;
+    background-color: #f8f9fa;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    flex-shrink: 0;
+}
+
+.seo-pdf-icon::before {
+    content: "📄";
+    font-size: 18px;
+    color: #dc3545; /* красный цвет для PDF */
+}
+
+/* Название файла */
+.seo-pdf-title {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.4;
+    color: #0497C0; /* ваш фирменный синий */
+    transition: color 0.3s ease;
+}
+
+.seo-pdf-card:hover .seo-pdf-title {
+    color: #0060bf; /* темно-синий при наведении */
+}
+
+/* Адаптивность для мобильных */
+@media (max-width: 768px) {
+    .seo-pdf-card {
+        flex-direction: column;
+        text-align: center;
+        padding: 20px;
+    }
+    
+    .seo-pdf-icon {
+        margin-right: 0;
+        margin-bottom: 12px;
+    }
+}
+
+/* ====================== */
+/* МИНИМАЛИСТИЧНАЯ ТАБЛИЦА SEO */
+/* ====================== */
+
+.seo-table-minimal-container {
+    width: 100%;
+    overflow-x: auto;
+    margin: 30px 0;
+    -webkit-overflow-scrolling: touch;
+}
+
+.seo-table-minimal {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px;
+    font-size: 15px;
+}
+
+.seo-table-minimal th {
+    color: #0497C0;
+    font-weight: 600;
+    text-align: left;
+    padding: 12px 20px;
+    border-bottom: 2px solid #0497C0;
+    font-size: 16px;
+}
+
+.seo-table-minimal td {
+    padding: 10px 20px;
+    border-bottom: 1px solid #e9ecef;
+    color: #495057;
+    line-height: 1.5;
+}
+
+.seo-table-minimal tr:hover td {
+    background-color: #f8f9fa;
+}
+
+.seo-table-minimal td.seo-table--accent {
+    color: #0497C0;
+    font-weight: 500;
+}
+
+.seo-table-minimal td.seo-table--price {
+    font-weight: 600;
+    color: #28a745;
+    text-align: right;
+}
+
+@media (max-width: 768px) {
+    .seo-table-minimal th,
+    .seo-table-minimal td {
+        padding: 8px 15px;
+        font-size: 14px;
+    }
+}
+
+/* ====================== */
+/* ПРОСТЫЕ КАРТОЧКИ В КОЛОНКАХ */
+/* ====================== */
+
+/* Обертка для всех карточек */
+.seo-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* автоматическая адаптация */
+    gap: 25px; /* расстояние между карточками */
+    margin: 40px 0;
+}
+
+/* Одна карточка */
+.seo-card {
+    background: white;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+    border: 1px solid #f0f0f0;
+    text-align: left;
+    height: 100%;
+}
+
+/* Эффект при наведении */
+.seo-card:hover {
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    transform: translateY(-3px);
+    border-color: #e0e0e0;
+}
+
+/* Заголовок карточки */
+.seo-card-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #0497C0; /* ваш фирменный синий */
+    margin: 0 0 15px 0;
+    line-height: 1.3;
+}
+
+/* Текст карточки */
+.seo-card-text {
+    color: #495057;
+    line-height: 1.6;
+    font-size: 16px;
+    margin: 0;
+}
+
+/* Адаптивность для мобильных */
+@media (max-width: 480px) {
+    .seo-cards {
+        gap: 15px;
+    }
+    
+    .seo-card {
+        padding: 20px;
+    }
+    
+    .seo-card-title {
+        font-size: 18px;
+    }
+}
+
+
+/* ====================== */
+/* КРАСИВЫЕ ЗАГОЛОВКИ H2 */
+/* ====================== */
+
+.seo-h2 {
+    font-size: 28px;
+    font-weight: 600;
+    color: #0497C0;
+    margin: 40px 0 25px 0;
+    line-height: 1.3;
+    padding-left: 15px;
+    border-left: 4px solid #0497C0;
+}
+
+@media (max-width: 768px) {
+    .seo-h2-accent {
+        font-size: 24px;
+        margin: 30px 0 20px 0;
+        padding-left: 10px;
+    }
+}
+
+
+/* ====================== */
+/* ЗАГОЛОВКИ H3 (в пару к H2-ACCENT) */
+/* ====================== */
+
+/* Основной стиль для H3 */
+.seo-h3 {
+    font-size: 22px;
+    font-weight: 600;
+    color: #0497C0; /* ваш фирменный синий */
+    margin: 30px 0 20px 0;
+    line-height: 1.4;
+    padding-left: 12px; /* чуть меньше отступа, чем у H2 */
+    border-left: 3px solid #0497C0; /* чуть тоньше линия */
+}
+
+/* Адаптивность для мобильных */
+@media (max-width: 768px) {
+    .seo-h3 {
+        font-size: 20px;
+        margin: 25px 0 15px 0;
+        padding-left: 10px;
+    }
+}
+
+
+/* ====================== */
+/* FAQ (ВОПРОСЫ-ОТВЕТЫ) */
+/* ====================== */
+
+/* Обертка всего FAQ */
+.seo-faq {
+    margin: 40px 0;
+}
+
+/* Один вопрос-ответ */
+.seo-faq-item {
+    margin-bottom: 15px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #e9ecef;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+}
+
+/* Вопрос */
+.seo-faq-question {
+    background: white;
+    padding: 18px 25px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #0497C0; /* ваш фирменный синий */
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    transition: background-color 0.2s ease;
+}
+
+.seo-faq-question:hover {
+    background-color: #f8f9fa;
+}
+
+/* Стрелка (будет вращаться при открытии) */
+.seo-faq-arrow {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+}
+
+.seo-faq-arrow::before {
+    content: "▼";
+    font-size: 14px;
+    color: #0497C0;
+    display: block;
+    text-align: center;
+    line-height: 1;
+}
+
+/* Скрытый чекбокс для управления состоянием */
+.seo-faq-toggle {
+    display: none;
+}
+
+/* Ответ - УБРАЛИ СЕРЫЙ ФОН! */
+.seo-faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    background: white; /* Белый фон вместо серого */
+    transition: max-height 0.3s ease, padding 0.3s ease;
+    padding: 0 25px;
+    border-top: 1px solid #f0f0f0; /* тонкая разделительная линия */
+}
+
+/* Стили для текста ответа */
+.seo-faq-answer-content {
+    padding: 0 0 18px 0;
+    line-height: 1.6;
+    color: #495057;
+    font-size: 16px;
+}
+
+/* Когда чекбокс отмечен (вопрос открыт) */
+.seo-faq-toggle:checked + .seo-faq-question {
+    border-bottom: 1px solid #f0f0f0; /* разделительная линия между вопросом и ответом */
+}
+
+.seo-faq-toggle:checked + .seo-faq-question .seo-faq-arrow {
+    transform: rotate(180deg); /* стрелка поворачивается вверх */
+}
+
+.seo-faq-toggle:checked ~ .seo-faq-answer {
+    max-height: 500px; /* достаточно для любого ответа */
+    padding: 0 25px 18px 25px;
+}
+
+/* Заголовок для всего блока FAQ */
+.seo-faq-title {
+    font-size: 28px;
+    font-weight: 600;
+    color: #0497C0;
+    margin: 0 0 25px 0;
+    line-height: 1.3;
+}
+
+/* Адаптивность для мобильных */
+@media (max-width: 768px) {
+    .seo-faq-question {
+        font-size: 17px;
+        padding: 16px 20px;
+    }
+    
+    .seo-faq-answer-content {
+        font-size: 15px;
+    }
+    
+    .seo-faq-title {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+}
+
+/* ====================== */
+/* СТИЛИЗОВАННЫЕ СПИСКИ SEO */
+/* ====================== */
+
+/* Основной стиль для списка */
+.seo-list {
+    margin: 25px 0;
+    padding-left: 20px;
+    line-height: 1.7;
+}
+
+/* Элемент списка */
+.seo-list li {
+    position: relative;
+    padding-left: 30px;
+    margin-bottom: 12px;
+    color: #495057;
+    font-size: 16px;
+}
+
+/* Иконка-маркер (эмодзи) */
+.seo-list li::before {
+    content: "✓"; /* стандартная галочка */
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 22px;
+    height: 22px;
+    background-color: #e3f2fd; /* светло-голубой фон */
+    color: #0497C0; /* ваш фирменный синий */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* Выделенный элемент списка (важный пункт) */
+.seo-list li.seo-list--highlight {
+    font-weight: 500;
+    color: #0497C0;
+    margin-top: 15px;
+    padding-left: 30px;
+}
+
+.seo-list li.seo-list--highlight::before {
+    content: "!";
+    background-color: #fff8e1; /* светло-желтый фон */
+    color: #ffc107; /* желтый цвет */
+}
+
+
+/* Адаптивность для мобильных */
+@media (max-width: 768px) {
+    .seo-list {
+        padding-left: 15px;
+    }
+    
+    .seo-list li {
+        padding-left: 25px;
+        font-size: 15px;
+    }
+    
+    .seo-list--simple li {
+        padding-left: 0;
+    }
+}
+
+/* ====================== */
+/* ГОРИЗОНТАЛЬНЫЕ ЛИНИИ */
+/* ====================== */
+
+/* Основная линия */
+.seo-divider {
+    position: relative;
+    margin: 40px 0;
+    border: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent 0%, #0497C0 20%, #0497C0 80%, transparent 100%);
+}
+
+/* Тонкая линия */
+.seo-divider--thin {
+    margin: 25px 0;
+    height: 1px;
+    background-color: #e9ecef;
+    border: 0;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .seo-divider {
+        margin: 30px 0;
+    }
+    .seo-divider--thin {
+        margin: 20px 0;
+    }
+}
+
+/* ====================== */
+/* БЛОК "ПРИМЕР ОТЧЕТА" */
+/* ====================== */
+
+/* Обертка блока */
+.seo-report {
+    margin: 30px 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Заголовок блока */
+.seo-report-header {
+    background: white;
+    border: 1px solid #e9ecef;
+    border-radius: 8px 8px 0 0;
+    padding: 16px 20px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+    transition: all 0.2s ease;
+}
+
+.seo-report-header:hover {
+    background-color: #f8f9fa;
+}
+
+/* Стрелка для индикации состояния */
+.seo-report-arrow {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+}
+
+.seo-report-arrow::before {
+    content: "▼";
+    font-size: 14px;
+    color: #6c757d;
+    display: block;
+    text-align: center;
+    line-height: 1;
+}
+
+/* Скрытый чекбокс */
+.seo-report-toggle {
+    display: none;
+}
+
+/* Контент отчета */
+.seo-report-content {
+    max-height: 0;
+    overflow: hidden;
+    background: white;
+    border: 1px solid #e9ecef;
+    border-top: 0;
+    border-radius: 0 0 8px 8px;
+    transition: max-height 0.3s ease;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+/* Внутреннее содержимое отчета */
+.seo-report-inner {
+    padding: 20px;
+    line-height: 1.6;
+    color: #495057;
+    font-size: 15px;
+}
+
+/* Заголовки внутри отчета (уменьшенные) */
+.seo-report-inner h3,
+.seo-report-inner h4 {
+    margin-top: 15px;
+    margin-bottom: 10px;
+    color: #0497C0;
+    font-weight: 500;
+    font-size: 18px;
+}
+
+.seo-report-inner h4 {
+    font-size: 16px;
+    margin-top: 12px;
+}
+
+/* Параграфы внутри отчета */
+.seo-report-inner p {
+    margin-bottom: 12px;
+    font-size: 15px;
+}
+
+/* Списки внутри отчета */
+.seo-report-inner ul,
+.seo-report-inner ol {
+    margin-left: 20px;
+    margin-bottom: 15px;
+}
+
+.seo-report-inner li {
+    margin-bottom: 8px;
+    font-size: 15px;
+}
+
+/* Таблицы внутри отчета (уменьшенные) */
+.seo-report-inner table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0;
+    font-size: 14px;
+}
+
+.seo-report-inner th,
+.seo-report-inner td {
+    border: 1px solid #e9ecef;
+    padding: 8px 12px;
+    text-align: left;
+}
+
+.seo-report-inner th {
+    background-color: #f8f9fa;
+    font-weight: 500;
+}
+
+/* Подпись отчета */
+.seo-report-signature {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #e9ecef;
+    font-style: italic;
+    color: #6c757d;
+    font-size: 14px;
+}
+
+/* Когда чекбокс отмечен (блок открыт) */
+.seo-report-toggle:checked + .seo-report-header .seo-report-arrow {
+    transform: rotate(180deg);
+}
+
+.seo-report-toggle:checked ~ .seo-report-content {
+    max-height: 1000px; /* достаточно для любого отчета */
+}
+
+/* Адаптивность для мобильных */
+@media (max-width: 768px) {
+    .seo-report-header {
+        padding: 14px 15px;
+        font-size: 16px;
+    }
+    
+    .seo-report-inner {
+        padding: 15px;
+        font-size: 14px;
+    }
+    
+    .seo-report-inner h3 {
+        font-size: 17px;
+    }
+    
+    .seo-report-inner h4 {
+        font-size: 15px;
+    }
+    
+    .seo-report-inner table {
+        font-size: 13px;
+    }
+    
+    .seo-report-inner th,
+    .seo-report-inner td {
+        padding: 6px 10px;
+    }
+}

@@ -1,0 +1,1 @@
+<a href="/online-zajavka"><img src="<?=SITE_TEMPLATE_PATH?>/images/banner_1.jpg" class="left-banner"  /></a>

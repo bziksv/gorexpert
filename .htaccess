@@ -1,0 +1,347 @@
+<RequireAll>
+    Require all granted
+
+    Require not ip 49.13.193.0/24
+    Require not ip 5.139.230.0/24
+    Require not ip 5.139.253.0/24
+    Require not ip 31.181.248.0/24
+    Require not ip 37.18.38.0/24
+    Require not ip 37.77.111.0/24
+    Require not ip 45.140.18.0/24
+    Require not ip 62.183.46.0/24
+    Require not ip 77.110.108.0/24
+    Require not ip 83.239.97.0/24
+    Require not ip 85.172.109.0/24
+    Require not ip 85.174.205.0/24
+    Require not ip 85.175.197.0/24
+    Require not ip 85.175.217.0/24
+    Require not ip 91.233.43.0/24
+    Require not ip 95.153.163.0/24
+    Require not ip 95.153.177.0/24
+    Require not ip 95.153.178.0/24
+    Require not ip 95.153.180.0/24
+    Require not ip 95.25.184.0/24
+    Require not ip 178.176.211.0/24
+    Require not ip 185.10.173.0/24
+    Require not ip 188.162.140.0/24
+    Require not ip 188.162.143.0/24
+    Require not ip 188.170.169.0/24
+    Require not ip 217.78.231.0/24
+</RequireAll>
+
+php_value mbstring.func_overload 2
+php_value mbstring.internal_encoding UTF-8
+
+
+RewriteEngine On  
+RewriteCond %{HTTP_HOST} ^www.gorexpert.ru$ [NC]  
+RewriteRule ^(.*)$ https://gorexpert.ru/$1 [R=301,L]
+
+Options -Indexes 
+ErrorDocument 404 /404.php
+
+
+RewriteCond %{THE_REQUEST} // 
+# Проверяем, повторяется ли слеш (//) более двух раз. 
+RewriteRule .* /$0 [R=301,L] 
+# Исключаем все лишние слеши.
+
+
+
+RewriteEngine On
+RewriteCond %{HTTPS} !=on
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+# Перенаправляем с HTTP на HTTPS
+
+
+
+
+<IfModule mod_php5.c>
+  php_flag session.use_trans_sid off
+  #php_value display_errors 1
+  #php_value mbstring.internal_encoding UTF-8
+</IfModule>
+
+<IfModule mod_rewrite.c>
+  Options +FollowSymLinks
+  RewriteEngine On
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-l
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME} !/bitrix/urlrewrite.php$
+  RewriteRule ^(.*)$ /bitrix/urlrewrite.php [L]
+  RewriteRule .* - [E=REMOTE_USER:%{HTTP:Authorization}]
+</IfModule>
+
+<IfModule mod_dir.c>
+  DirectoryIndex index.php index.html
+RewriteRule ^(.*)index\.php$ https://gorexpert.ru/$1 [R=301,L]
+</IfModule>
+
+<IfModule mod_expires.c>
+  ExpiresActive on
+  ExpiresByType image/jpeg "access plus 3 day"
+  ExpiresByType image/gif "access plus 3 day"
+  ExpiresByType image/png "access plus 3 day"
+  ExpiresByType text/css "access plus 3 day"
+  ExpiresByType application/javascript "access plus 3 day"  
+</IfModule>
+
+php_value default_socket_timeout 60
+php_value max_input_vars 10000
+
+Redirect 301 /services/nashi-partneri-i-klienti/ /partnery-i-klienty/
+Redirect 301 /services/nashi-documneti/ /dokumenty/
+
+RewriteCond %{QUERY_STRING} ^page=1&subpage=6$ 
+RewriteRule ^.*$ /services/ocenka-nedvijemosti/? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^page=1&subpage=10$ 
+RewriteRule ^.*$ /services/ocenka-zemelnih-ychastkov/? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^page=1&subpage=11$ 
+RewriteRule ^.*$ /services/ocenka-oborydovania-mashiniavtotransoprtnih-sredstv/? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^page=1&subpage=12$ 
+RewriteRule ^.*$ /services/ocenka-nemat-aktivov/? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^page=1&subpage=13$ 
+RewriteRule ^.*$ /services/ocenka-biznesa/? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^page=1&subpage=20$ 
+RewriteRule ^.*$ /services/biznes-planirovanie/? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^page=1&subpage=14$ 
+RewriteRule ^.*$ /services/ocenka-cennih-bymag/? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^page=1&subpage=26$ 
+RewriteRule ^.*$ /services/ocenka-arendi/? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^page=1&subpage=15$ 
+RewriteRule ^.*$ /services/ocenka-ysherba/? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^page=1&subpage=21$ 
+RewriteRule ^.*$ /services/poradok-provedenia-ocenki/? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^page=1&subpage=28$ 
+RewriteRule ^.*$ /services/informacia-ob-ocenke-kvartiri/? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^page=1&subpage=40$ 
+RewriteRule ^.*$ /services/ocenka-pri-bankrotsvte/? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^page=1&subpage=22$ 
+RewriteRule ^.*$ /services/ocenka-dla-kreditovania/? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^page=1&subpage=19$ 
+RewriteRule ^.*$ /services/nashi-partneri-i-klienti/? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^page=1&subpage=16$ 
+RewriteRule ^.*$ /services/priglashenie-k-partnerstvy/? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^page=1&subpage=25$ 
+RewriteRule ^.*$ /prices/? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^page=1&subpage=18$ 
+RewriteRule ^.*$ /services/nashi-documneti/? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^page=2&subpage=5$ 
+RewriteRule ^.*$ /services/ocenka-noyhay/? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^page=2&subpage=6$ 
+RewriteRule ^.*$ /services/ocenka-gydvila/? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^page=2&subpage=7$ 
+RewriteRule ^.*$ /services/ocenka-brenda/? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^page=1&subpage=13$ 
+RewriteRule ^.*$ /services/ocenka-predpriatii/? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^page=5&subpage=27$ 
+RewriteRule ^.*$ /services/ocenka-zagorodnoi-nedvijemosti/? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^page=5&subpage=61$
+RewriteRule ^.*$ /articles/osob-ocenki-avto-pri-dtp/? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^page=5&subpage=60$
+RewriteRule ^.*$ /articles/ocanka-kvartiri/? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^page=5&subpage=59$
+RewriteRule ^.*$ /articles/spec-ocenka0yslovii-tryda/? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^page=5&subpage=58$
+RewriteRule ^.*$ /articles/osago-bydyt-vishe/? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^page=5&subpage=57$
+RewriteRule ^.*$ /articles/ozenka-ysherba-pri-pojare/? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^page=5&subpage=56$
+RewriteRule ^.*$ /articles/malogabr-jile-polz-sprosom/? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^page=5&subpage=55$
+RewriteRule ^.*$ /articles/eksp-ocenka-stoimosti-garaja/? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^page=5&subpage=54$
+RewriteRule ^.*$ /articles/ocenka-ysherba-ot-zaliva/? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^page=5&subpage=53$
+RewriteRule ^.*$ /articles/osobennosti-ocenki-avtomobila/? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^page=5&subpage=52$
+RewriteRule ^.*$ /articles/kad-nedv-nysjdaetsa-v-dorabotke/? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^page=5&subpage=51$
+RewriteRule ^.*$ /articles/premer-min-rossii-podderjal-kadastr/? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^page=5&subpage=49$
+RewriteRule ^.*$ /articles/rinok-predostavlenia-ocen-yslyg-rossii-prod-ymensh/? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^page=5&subpage=48$
+RewriteRule ^.*$ /articles/plan-izmenit-sposob-ocenki-nedv-imyshestva/? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^page=5&subpage=47$
+RewriteRule ^.*$ /articles/kab-ministrov-rossii-sovetyet-delat-kadastrovyu-ocenky/? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^page=5&subpage=46$
+RewriteRule ^.*$ /articles/vzaimodeistvie-interfaksa-i-komp-ocnshikov/? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^page=5&subpage=45$
+RewriteRule ^.*$ /articles/v-stolice-stoimost-torg-off-obektov-ymenshena/? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^page=5&subpage=44$
+RewriteRule ^.*$ /articles/apple-samii-dorogoi-brend/? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^page=5&subpage=43$
+RewriteRule ^.*$ /articles/v-naro-dominkom-raeone-minmosoblimyshestvo-smenilo-rezyltati/? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^page=5&subpage=42$
+RewriteRule ^.*$ /articles/kompanii-zanimayushchiyesya-otsenkoy-mogut-obyazat-ispolzovat-pechat/? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^page=5&subpage=41$
+RewriteRule ^.*$ /articles/dla-kadastrirovania-nedv-v-sevostopole-sdelaut-norm-stoim/? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^page=5&subpage=40$
+RewriteRule ^.*$ /articles/vlast-podmoskov-obnaryjeno-bolee-tridcati-tis-oshibok-v-katastr/? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^page=5&subpage=39$
+RewriteRule ^.*$ /articles/pomenalis-pravila-vibora-ocnshika-dla-ystanovki-kadastr-ceni-na-nedv/? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^page=5&subpage=35$
+RewriteRule ^.*$ /articles/ocenka-arendi-pomeshenii-v-peterbyrge/? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^page=5&subpage=36$
+RewriteRule ^.*$ /articles/nezavisemaa-ocenka0ysherba-pri-zalive-ili-pojare/? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^page=5&subpage=37$
+RewriteRule ^.*$ /articles/ocenka-jiloi-nedvijemosti-kvartir/? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^page=5&subpage=38$
+RewriteRule ^.*$ /articles/ocenka-zagorodnoi-nedvijemosti-dla-sberbanka/? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^page=5&subpage=21$
+RewriteRule ^.*$ /services/ocenka-zdanii/? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^page=5&subpage=26$
+RewriteRule ^.*$ /services/ocenka-komercheskoi-nedv/? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^page=5&subpage=28$
+RewriteRule ^.*$ /services/ocenka-kvartir/? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^page=5&subpage=29$
+RewriteRule ^.*$ /services/ocenka-sooryjenii-i-peredatochnih-ystroistv/? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^page=5&subpage=30$
+RewriteRule ^.*$ /services/ocenka-objektov-nezaversh-stroitelstva/? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^page=1&subpage=29$
+RewriteRule ^.*$ /services/informacia-ob-ocenke-kvartiri/block-voporsi-i-otveti/? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^page=1&subpage=30$
+RewriteRule ^.*$ /services/informacia-ob-ocenke-kvartiri/block-voporsi-i-otveti/? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^page=1&subpage=31$
+RewriteRule ^.*$ /services/informacia-ob-ocenke-kvartiri/block-voporsi-i-otveti/? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^page=1&subpage=32$
+RewriteRule ^.*$ /services/informacia-ob-ocenke-kvartiri/block-voporsi-i-otveti/? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^page=1&subpage=33$
+RewriteRule ^.*$ /services/informacia-ob-ocenke-kvartiri/obshie-svedenia-ob-ocenke-kvartir/? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^page=1&subpage=34$
+RewriteRule ^.*$ /services/informacia-ob-ocenke-kvartiri/dla-chego-nyjna-ocenka-kvartiri/? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^page=1&subpage=35$
+RewriteRule ^.*$ /services/informacia-ob-ocenke-kvartiri/obshie-svedenia-o-podhodah-k-ocenke-kvartir/? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^page=1&subpage=36$
+RewriteRule ^.*$ /services/informacia-ob-ocenke-kvartiri/osnovnie-cenoobrazyushie-faktori-ocenki-kvartir-v-sp/? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^page=1&subpage=37$
+RewriteRule ^.*$ /services/informacia-ob-ocenke-kvartiri/ocenka-kvartir-dla-ipoteki/? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^page=1&subpage=38$
+RewriteRule ^.*$ /services/informacia-ob-ocenke-kvartiri/etapi-provedenia-ocenki-kvartir/? [L,R=301]
+
+Redirect 301 /services/otsenka-nedvizhimosti/ /services/ocenka-nedvijemosti/
+Redirect 301 /services/ocenka-brenda/ /articles/otsenka-brenda/
+
+Redirect 301 /services/ocenka-komercheskoi-nedv/ /services/ocenka-kommercheskoy-nedvizhimosti/
+
+Redirect 301 /soglashenie/ /
+
+Redirect 301 /articles/osobennosti-ocenki-avtomobila/ /services/otsenka-avtomobilya/
+Redirect 301 /articles/osobennosti-ocenki-avtomobila /services/otsenka-avtomobilya/
+
+
+
+Redirect 301 /articles/ocenka-zdaniya/ /services/ocenka-zdanii/
+Redirect 301 /articles/ocenka-zdaniya /services/ocenka-zdanii/
+
+Redirect 301 /articles/eksp-ocenka-stoimosti-garaja/ /services/otsenka-garazha/
+Redirect 301 /articles/eksp-ocenka-stoimosti-garaja /services/otsenka-garazha/
+
+Redirect 301 /articles/opredelenie-ceny-vosstanovitelnyh-remontnyh-rabot/ /services/otsenka-ushcherba-imushchestva-ot-zalitiya-vodoy/
+Redirect 301 /articles/opredelenie-ceny-vosstanovitelnyh-remontnyh-rabot /services/otsenka-ushcherba-imushchestva-ot-zalitiya-vodoy/
+
+Redirect 301 /articles/ocenka-pomesheniya/ /services/otsenka-pomeshcheniya/
+Redirect 301 /articles/ocenka-pomesheniya /services/otsenka-pomeshcheniya/
+
+Redirect 301 /articles/otsenka-nedvizhimosti-dlya-ipoteki/ /services/otsenka-kvartiry-v-spb-dlya-ipoteki/
+Redirect 301 /articles/vybor-kompanii-dlya-ocenki-zhilya/ /services/otsenka-kvartiry-v-spb-dlya-ipoteki/
+
+Redirect 301 /articles/stoimost-zagorodnoj-nedvizhimosti-dlja-investicij/ /services/ocenka-zagorodnoi-nedvijemosti/
+
+Redirect 301 /articles/kak-ocenit-avtomobil/ /services/otsenka-avtomobilya/
+
+Redirect 301 /articles/ocenka-proizvodstvennogo-zdanija/ /services/otsenka-proizvodstvennogo-zdaniya/
+
+Redirect 301 /articles/ocenka-nasledstvennogo-imushhestva/ /services/rynochnaya-otsenka-nedvizhimosti-dlya-nasledstva/
+Redirect 301 /articles/osobennosti-ocenochnogo-processa/ /services/rynochnaya-otsenka-nedvizhimosti-dlya-nasledstva/
+
+Redirect 301 /articles/ozenka-ysherba-pri-pojare/ /services/otsenka-ushcherba-imushchestva-posle-pozhara/
+
+Redirect 301 /articles/metodi-ocenki-zemli/ /services/otsenka-doma-s-zemelnym-uchastkom/
+
+Redirect 301 /articles/nezavisemaa-ocenka0ysherba-pri-zalive-ili-pojare/ /services/ocenka-ysherba/
+Redirect 301 /articles/otsenka-ushcherba-nedvizhimosti/ /services/ocenka-ysherba/
+
+Redirect 301 /articles/problemy-ocenki-nezavershennogo-stroitelstva/ /services/ocenka-objektov-nezaversh-stroitelstva/
+
+Redirect 301 /articles/tonkosti-ocenki-imyshestva-pri-bankrotstve/ /services/ocenka-pri-bankrotsvte/
+Redirect 301 /articles/tonkosti-ocenki-imyshestva-pri-bankrotstve /services/ocenka-pri-bankrotsvte/
+Redirect 301 /articles/otsenka-imushchestva-dolzhnika-pri-bankrotstve/ /services/ocenka-pri-bankrotsvte/
+Redirect 301 /articles/otsenka-imushchestva-dolzhnika-pri-bankrotstve /services/ocenka-pri-bankrotsvte/
+Redirect 301 /services/otsenka-pri-bankrotstve-predpriyatiy/ /services/ocenka-pri-bankrotsvte/
+
+
+# Сквозная ссылка под меню ИНФОРМАЦИЯ ОБ ОЦЕНКЕ КВАРТИРЫ и ее подразделы
+
+RewriteRule ^services/ocenka-kvartir/$ /services/otsenka-nedvizhimosti-v-spb-otsenka-kvartiry/ [R=301,L]
+
+RewriteRule ^services/informacia-ob-ocenke-kvartiri/$ /services/otsenka-nedvizhimosti-v-spb-otsenka-kvartiry/ [R=301,L]
+RewriteRule ^services/informacia-ob-ocenke-kvartiri/obshie-svedenia-o-podhodah-k-ocenke-kvartir/$ /services/otsenka-nedvizhimosti-v-spb-otsenka-kvartiry/ [R=301,L]
+RewriteRule ^services/informacia-ob-ocenke-kvartiri/dla-chego-nyjna-ocenka-kvartiri/$ /services/otsenka-nedvizhimosti-v-spb-otsenka-kvartiry/ [R=301,L]
+RewriteRule ^services/informacia-ob-ocenke-kvartiri/obshie-svedenia-ob-ocenke-kvartir/$ /services/otsenka-nedvizhimosti-v-spb-otsenka-kvartiry/ [R=301,L]
+RewriteRule ^services/informacia-ob-ocenke-kvartiri/osnovnie-cenoobrazyushie-faktori-ocenki-kvartir-v-sp/$ /services/otsenka-nedvizhimosti-v-spb-otsenka-kvartiry/ [R=301,L]
+RewriteRule ^services/informacia-ob-ocenke-kvartiri/etapi-provedenia-ocenki-kvartir/$ /services/otsenka-nedvizhimosti-v-spb-otsenka-kvartiry/ [R=301,L]
+RewriteRule ^services/informacia-ob-ocenke-kvartiri/ocenka-kvartir-dla-ipoteki/$ /services/otsenka-kvartiry-v-spb-dlya-ipoteki/ [R=301,L]

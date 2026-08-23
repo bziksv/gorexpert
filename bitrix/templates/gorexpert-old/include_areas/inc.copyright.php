@@ -1,0 +1,1 @@
+Copyright &copy; 2010 - <?=date("Y")?>&nbsp;&nbsp;|&nbsp;&nbsp;Все права защищены
