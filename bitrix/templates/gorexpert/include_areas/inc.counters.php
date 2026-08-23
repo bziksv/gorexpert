@@ -52,16 +52,23 @@ _tmr.push({id: "3145400", type: "pageView", start: (new Date()).getTime()});
 <img src="https://top-fwz1.mail.ru/counter?id=3145400;t=479;l=1" style="border:0;" height="31" width="88" alt="Top.Mail.Ru" /></a>
 <!-- //Rating Mail.ru logo -->
 
-<!--LiveInternet counter--><script type="text/javascript"><!--
-document.write("<a href='http://www.liveinternet.ru/click' "+
-"target=_blank><img src='https://counter.yadro.ru/hit?t24.7;r"+
-escape(document.referrer)+((typeof(screen)=="undefined")?"":
-";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth?
-screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
-";"+Math.random()+
-"' alt='' title='LiveInternet: показано число посетителей за"+
-" сегодня' "+
-"border=0 width=88 height=15><\/a>")//--></script><!--/LiveInternet-->
+<!--LiveInternet counter-->
+<a href="https://www.liveinternet.ru/click" target="_blank" rel="nofollow">
+<img id="licntGorexpert" width="88" height="31" style="border:0;" title="LiveInternet: показано число посетителей за сегодня" src="https://counter.yadro.ru/hit?t14.1" alt="LiveInternet" />
+</a>
+<script type="text/javascript">
+(function (d) {
+	var img = d.getElementById('licntGorexpert');
+	if (!img) {
+		return;
+	}
+	img.src = 'https://counter.yadro.ru/hit?t14.1;r' + escape(d.referrer) +
+		(typeof(screen) === 'undefined' ? '' :
+		';s' + screen.width + '*' + screen.height + '*' + (screen.colorDepth ? screen.colorDepth : screen.pixelDepth)) +
+		';u' + escape(d.location.href) + ';' + Math.random();
+})(document);
+</script>
+<!--/LiveInternet-->
 
 <!-- Top100 (Kraken) Widget -->
 <span id="top100_widget"></span>

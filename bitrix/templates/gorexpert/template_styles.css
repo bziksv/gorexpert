@@ -88,6 +88,9 @@ main {position: relative;}
 .footer>div {background-color:#F5F5F5;padding:20px 10px;text-align:center;font-size:12px;}
 
 .counters {text-align:center;padding:12px 0 0 0 !important;}
+.counters a {display:inline-block;vertical-align:middle;margin:0 6px;}
+.counters img {vertical-align:middle;}
+.counters #top100_widget {display:inline-block;vertical-align:middle;margin:0 6px;}
 .informer {width:234px; margin:0 auto;}
 .banner {margin:0 auto 20px;display:block;border:0;}
 
