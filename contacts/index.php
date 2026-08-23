@@ -13,7 +13,7 @@ $APPLICATION->SetTitle("Контакты");
 </div>
 <h2>Схема проезда</h2>
 <div style="margin-bottom: 20px; height: 450px;">
-	 <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A3c49b41b3792408b9112def0fd6ef50f9bdc576cdc66afacf70d3a921048b690&amp;height=450&amp;lang=ru_RU&amp;scroll=true"></script> <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A3c49b41b3792408b9112def0fd6ef50f9bdc576cdc66afacf70d3a921048b690&amp;source=constructor" width="100%25" height="450" frameborder="0"></iframe>
+	<iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A3c49b41b3792408b9112def0fd6ef50f9bdc576cdc66afacf70d3a921048b690&amp;source=constructor" width="100%" height="450" frameborder="0" style="display:block;"></iframe>
 </div>
  <a name="feedback"></a>
 <h2>Форма обратной связи</h2>
