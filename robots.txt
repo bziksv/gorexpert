@@ -40,4 +40,8 @@ Disallow: /services/test/
 Disallow: /services/test2/
 Disallow: /services/test-obrazets-oformleniya/
 Disallow: /*.pdf$
+Disallow: /company/legal/politika-cookie/
+Disallow: /company/legal/soglasie-na-obrabotku-pd/
+Disallow: /company/legal/politika-personalnyh-dannyh/
+Disallow: /company/legal/pravila-rekomendatelnyh-tehnologiy/
 Sitemap: https://gorexpert.ru/sitemap.xml

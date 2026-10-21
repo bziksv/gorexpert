@@ -326,6 +326,7 @@ $APPLICATION->SetTitle("Оценка недвижимости в Санкт-Пе
 		 В итоговом отчете не приводится простое среднее арифметическое от результатов разных подходов. Каждый метод дает свою величину стоимости. Задача профессионала — проанализировать все полученные данные, сопоставить результаты и, основываясь на максимально полной информации, дать взвешенное заключение о итоговой величине стоимости, подробно обосновав свой вывод. Именно такой комплексный анализ обеспечивает высокую достоверность и убедительность отчета для других участников сделки, банков или судебных инстанций.
 	</p>
 </div>
+
 <hr class="seo-divider">
 <h2 class="seo-h2">Как быстро выполняется экспертиза</h2>
 <div class="seo-highlight-box">
@@ -392,16 +393,7 @@ $APPLICATION->SetTitle("Оценка недвижимости в Санкт-Пе
 </div>
 <hr class="seo-divider">
 <div class="podrazdel tag_menu_all">
- <a href="/services/otsenka-avtomobilya/" class="podrazdel__link">Оценка автомобиля после ДТП</a> <a href="/services/otsenka-ushcherba-imushchestva-posle-pozhara/" class="podrazdel__link">Экспертиза ущерба после пожара</a> <a href="/services/otsenka-ushcherba-imushchestva-ot-zalitiya-vodoy/" class="podrazdel__link">Экспертиза ущерба после залива</a> <a href="/articles/kogda-mozhet-potrebovatsya-otsenka-spetstekhniki/" class="podrazdel__link">Оценка спецтехники</a>
-<a href="/articles/ocenka-jiloi-nedvijemosti-kvartir/" class="podrazdel__link" >Оценка жилой недвижимости</a>
-<a href="/services/otsenka-nedvizhimosti-dlya-ipoteki/" class="podrazdel__link" >Экспертиза для ипотечного кредита</a>
-<a href="/services/otsenka-zemli-pri-vstuplenii-v-nasledstvo/" class="podrazdel__link" >Экспертиза для вступления в наследство</a>
-<a href="/articles/ocenka-zagorodnoi-nedvijemosti-dla-sberbanka/" class="podrazdel__link" >Оценка загородной недвижимости для Сбербанка</a>
-<a href="/articles/opredelenie-stoimosti-transportnogo-sredstava/" class="podrazdel__link" >Оценка транспортных стредств</a>
-<a href="/services/otsenka-garazha/" class="podrazdel__link" >Оценка гаража</a>
-<a href="/articles/ocenka-ushherba-poluchennogo-v-dtp/" class="podrazdel__link" >Экспертиза ущерба от ДТП</a>
-<a href="/services/otsenka-nezhilogo-pomeshcheniya/" class="podrazdel__link" >Оценка нежилой недвижимости</a>
-
+ <a href="/services/otsenka-avtomobilya/" class="podrazdel__link">Оценка автомобиля после ДТП</a> <a href="/services/otsenka-ushcherba-imushchestva-posle-pozhara/" class="podrazdel__link">Экспертиза ущерба после пожара</a> <a href="/services/otsenka-ushcherba-imushchestva-ot-zalitiya-vodoy/" class="podrazdel__link">Экспертиза ущерба после залива</a> <a href="/articles/kogda-mozhet-potrebovatsya-otsenka-spetstekhniki/" class="podrazdel__link">Оценка спецтехники</a> <a href="/articles/ocenka-jiloi-nedvijemosti-kvartir/" class="podrazdel__link">Оценка жилой недвижимости</a> <a href="/services/otsenka-nedvizhimosti-dlya-ipoteki/" class="podrazdel__link">Экспертиза для ипотечного кредита</a> <a href="/services/otsenka-zemli-pri-vstuplenii-v-nasledstvo/" class="podrazdel__link">Экспертиза для вступления в наследство</a> <a href="/articles/ocenka-zagorodnoi-nedvijemosti-dla-sberbanka/" class="podrazdel__link">Оценка загородной недвижимости для Сбербанка</a> <a href="/articles/opredelenie-stoimosti-transportnogo-sredstava/" class="podrazdel__link">Оценка транспортных стредств</a> <a href="/services/otsenka-garazha/" class="podrazdel__link">Оценка гаража</a> <a href="/articles/ocenka-ushherba-poluchennogo-v-dtp/" class="podrazdel__link">Экспертиза ущерба от ДТП</a> <a href="/services/otsenka-nezhilogo-pomeshcheniya/" class="podrazdel__link">Оценка нежилой недвижимости</a>
 </div>
 <div class="navi">
  <span class="open is-act">Показать все</span><span class="closem">Свернуть</span>
