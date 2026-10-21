@@ -17,7 +17,12 @@ class CAdminPage
 	var $aModules = array();
 	var $bInit = false;
 
-	public function CAdminPage()
+	public function __construct()
+	{
+		$this->CAdminPage();
+	}
+
+	function CAdminPage()
 	{
 	}
 
@@ -384,6 +389,11 @@ class CAdminMenu
 {
 	var $aGlobalMenu, $aActiveSections=array(), $aOpenedSections=array();
 	var $bInit = false;
+
+	function __construct()
+	{
+		$this->CAdminMenu();
+	}
 
 	function CAdminMenu()
 	{
@@ -1042,6 +1052,11 @@ class CAdminPopup
 	var $id;
 	var $items;
 	var $params;
+
+	function __construct($name, $id, $items=false, $params=false)
+	{
+		$this->CAdminPopup($name, $id, $items, $params);
+	}
 
 	function CAdminPopup($name, $id, $items=false, $params=false)
 	{
@@ -2046,6 +2061,11 @@ class CAdminContextMenu
 	var $bMenuAdded = false;
 	var $bRightBarAdded = false;
 
+	function __construct($items, $additional_items = array())
+	{
+		$this->CAdminContextMenu($items, $additional_items);
+	}
+
 	function CAdminContextMenu($items, $additional_items = array())
 	{
 		//array(
@@ -2273,6 +2293,11 @@ class CAdminSorting
 	var $by_initial;
 	var $order_initial;
 
+	function __construct($table_id, $by_initial=false, $order_initial=false, $by_name="by", $ord_name="order")
+	{
+		$this->CAdminSorting($table_id, $by_initial, $order_initial, $by_name, $ord_name);
+	}
+
 	function CAdminSorting($table_id, $by_initial=false, $order_initial=false, $by_name="by", $ord_name="order")
 	{
 		/** @global CMain $APPLICATION */
@@ -2460,6 +2485,11 @@ class CAdminTabControl
 
 	var $AUTOSAVE = null;
 	protected $tabEvent = false;
+
+	function __construct($name, $tabs, $bCanExpand = true, $bDenyAutoSave = false)
+	{
+		$this->CAdminTabControl($name, $tabs, $bCanExpand, $bDenyAutoSave);
+	}
 
 	function CAdminTabControl($name, $tabs, $bCanExpand = true, $bDenyAutoSave = false)
 	{
@@ -2952,6 +2982,11 @@ class CAdminViewTabControl
 	var $selectedTab;
 	var $tabIndex = 0;
 
+	function __construct($name, $tabs)
+	{
+		$this->CAdminViewTabControl($name, $tabs);
+	}
+
 	function CAdminViewTabControl($name, $tabs)
 	{
 		//array(array("DIV"=>"", "TAB"=>"", "ICON"=>, "TITLE"=>"", "ONSELECT"=>"javascript"), ...)
@@ -3085,7 +3120,12 @@ class CAdminList
 	 * @param string $table_id
 	 * @param CAdminSorting|bool $sort
 	 */
-	public function CAdminList($table_id, $sort = false)
+	public function __construct($table_id, $sort = false)
+	{
+		$this->CAdminList($table_id, $sort);
+	}
+
+	function CAdminList($table_id, $sort = false)
 	{
 		$this->table_id = $table_id;
 		$this->sort = $sort;
@@ -4020,6 +4060,11 @@ class CAdminListRow
 	var $pList;
 
 
+	function __construct(&$aHeaders, $table_id)
+	{
+		$this->CAdminListRow($table_id);
+	}
+
 	function CAdminListRow(&$aHeaders, $table_id)
 	{
 		$this->aHeaders = $aHeaders;
@@ -4375,6 +4420,11 @@ class CAdminMessage
 	 * @param string|array $message
 	 * @param CAdminException|bool $exception
 	 */
+	function __construct($message, $exception=false)
+	{
+		$this->CAdminMessage($message, $exception);
+	}
+
 	function CAdminMessage($message, $exception=false)
 	{
 		//array("MESSAGE"=>"", "TYPE"=>("ERROR"|"OK"|"PROGRESS"), "DETAILS"=>"", "HTML"=>true)
@@ -4532,6 +4582,11 @@ class CAdminChain
 	var $items = array();
 	var $id, $bVisible;
 
+	function __construct($id=false, $bVisible=true)
+	{
+		$this->CAdminChain($id, $bVisible);
+	}
+
 	function CAdminChain($id=false, $bVisible=true)
 	{
 		$this->id = $id;
@@ -4621,6 +4676,11 @@ class CAdminChain
 class CAdminMainChain extends CAdminChain
 {
 	var $bInit = false;
+
+	function __construct($id=false, $bVisible=true)
+	{
+		$this->CAdminMainChain($id, $bVisible);
+	}
 
 	function CAdminMainChain($id=false, $bVisible=true)
 	{
@@ -4926,7 +4986,12 @@ class CAdminTabEngine
 	var $arArgs = array();
 	var $bVarsFromForm = False;
 
-	function CAdminTabEngine($name, $arArgs = array())
+		function __construct($name, $arArgs = array())
+	{
+		$this->CAdminTabEngine($name, $arArgs);
+	}
+
+function CAdminTabEngine($name, $arArgs = array())
 	{
 		$this->bInited = False;
 		$this->name = $name;
@@ -5056,7 +5121,12 @@ class CJSPopup
 		'ARGS' => 'param1=values1&param2=value2', // additional GET arguments for POST query
 	)
 	*/
-	function CJSPopup($title = '', $arConfig = array())
+		function __construct($title = '', $arConfig = array())
+	{
+		$this->CJSPopup($title, $arConfig);
+	}
+
+function CJSPopup($title = '', $arConfig = array())
 	{
 		if ($title != '') $this->SetTitle($title);
 		if (is_set($arConfig, 'TITLE')) $this->SetTitle($arConfig['TITLE']);
@@ -5390,6 +5460,11 @@ class CAdminForm extends CAdminTabControl
 	var $bCurrentReq = false;
 
 	var $bShowSettings = true;
+
+	function __construct($name, $tabs, $bCanExpand = true, $bDenyAutosave = false)
+	{
+		$this->CAdminForm($name, $tabs, $bCanExpand, $bDenyAutosave);
+	}
 
 	function CAdminForm($name, $tabs, $bCanExpand = true, $bDenyAutosave = false)
 	{
@@ -6407,6 +6482,11 @@ function ShowJSHint($text, $arParams=false)
 
 class CAdminTabControlDrag extends CAdminTabControl
 {
+	function __construct($name, $tabs, $moduleId="", $bCanExpand = true, $bDenyAutosave = false)
+	{
+		$this->CAdminTabControlDrag($name, $tabs, $moduleId, $bCanExpand, $bDenyAutosave);
+	}
+
 	function CAdminTabControlDrag($name, $tabs, $moduleId="", $bCanExpand = true, $bDenyAutosave = false)
 	{
 		parent::CAdminTabControl($name, $tabs, $bCanExpand, $bDenyAutosave);

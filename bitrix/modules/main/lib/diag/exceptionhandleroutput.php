@@ -8,7 +8,7 @@ Main\Localization\Loc::loadMessages(__FILE__);
 class ExceptionHandlerOutput
 	implements IExceptionHandlerOutput
 {
-	function renderExceptionMessage(\Exception $exception, $debug = false)
+	function renderExceptionMessage(\Throwable $exception, $debug = false)
 	{
 		if ($debug)
 		{

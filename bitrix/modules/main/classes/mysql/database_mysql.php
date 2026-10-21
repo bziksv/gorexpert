@@ -130,6 +130,11 @@ class CDatabase extends CDatabaseMysql
 
 class CDBResult extends CDBResultMysql
 {
+	function __construct($res = null)
+	{
+		$this->CDBResult($res);
+	}
+
 	function CDBResult($res = null)
 	{
 		parent::CDBResultMysql($res);

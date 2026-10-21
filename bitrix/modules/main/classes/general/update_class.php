@@ -3913,6 +3913,11 @@ class CUpdatesXMLNode
 	var $children;			// Subnodes
 	var $attributes;		// Attributes
 
+	function __construct()
+	{
+		$this->CUpdatesXMLNode();
+	}
+
 	function CUpdatesXMLNode()
 	{
 	}
@@ -4023,6 +4028,11 @@ class CUpdatesXMLDocument
 	var $children;
 	var $root;
 
+	function __construct()
+	{
+		$this->CUpdatesXMLDocument();
+	}
+
 	function CUpdatesXMLDocument()
 	{
 	}
@@ -4070,6 +4080,11 @@ class CUpdatesXML
 {
 	var $tree;
 	var $TrimWhiteSpace;
+
+	function __construct($TrimWhiteSpace = True)
+	{
+		$this->CUpdatesXML($TrimWhiteSpace);
+	}
 
 	function CUpdatesXML($TrimWhiteSpace = True)
 	{

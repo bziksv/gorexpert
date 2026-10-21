@@ -13,6 +13,11 @@ class CAllDiskQuota
 	var $max_execution_time = 20; // 20 sec
 	var $LAST_ERROR = false;
 
+	function __construct($params = array())
+	{
+		$this->CAllDiskQuota($params);
+	}
+
 	public function CAllDiskQuota($params = array())
 	{
 		if(array_key_exists("max_execution_time", $params) && intval($params["max_execution_time"]) > 0)

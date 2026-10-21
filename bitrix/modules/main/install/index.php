@@ -19,6 +19,11 @@ class main extends CModule
 	var $MODULE_DESCRIPTION;
 	var $MODULE_CSS;
 
+	function __construct()
+	{
+		$this->main();
+	}
+
 	function main()
 	{
 		$arModuleVersion = array();

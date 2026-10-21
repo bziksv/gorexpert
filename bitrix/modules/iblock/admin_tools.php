@@ -608,6 +608,11 @@ class _CIBlockError
 {
 	var $err_type, $err_text, $err_level;
 
+	function __construct($err_level = false, $err_type = "", $err_text = "")
+	{
+		$this->_CIBlockError($err_level, $err_type, $err_text);
+	}
+
 	function _CIBlockError($err_level = false, $err_type = "", $err_text = "")
 	{
 		$this->err_type = $err_type;

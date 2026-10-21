@@ -19,6 +19,11 @@ class CIBlockResult extends CDBResult
 	var $_LAST_IBLOCK_ID = "";
 	var $_FILTER_IBLOCK_ID = array();
 
+	function __construct($res)
+	{
+		$this->CIBlockResult($res);
+	}
+
 	function CIBlockResult($res)
 	{
 		parent::CDBResult($res);

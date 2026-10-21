@@ -99,10 +99,10 @@
 		</header>
 		<main>
 		<?if($APPLICATION->GetCurPage() == "/"):?>
-		<div class="index__slider-wrap agllimage">
-				<div class="index__slider agllimage">
+		<div class="index__slider-wrap">
+				<div class="index__slider">
 					<div>
-						<img src="<?=SITE_TEMPLATE_PATH;?>/images/slide-1.jpg" class="agllimage" alt="">
+						<img src="<?=SITE_TEMPLATE_PATH;?>/images/slide-1.jpg" alt="">
 						<div class="index__slider-text">
 							<p class="hdr">Оценка недвижимости</p>
 							<p class="cena"><span class="from">от</span> 5&nbsp;000 ₽</p>
@@ -110,7 +110,7 @@
 						</div>
 					</div>
 					<div>
-						<img src="<?=SITE_TEMPLATE_PATH;?>/images/slide-2.jpg" class="agllimage" alt="">
+						<img src="<?=SITE_TEMPLATE_PATH;?>/images/slide-2.jpg" alt="">
 						<div class="index__slider-text">
 							<p class="hdr">Оценка земельных участков</p>
 							<p class="cena"><span class="from">от</span> 6&nbsp;000 ₽</p>
@@ -118,7 +118,7 @@
 						</div>
 					</div>
 					<div>
-						<img src="<?=SITE_TEMPLATE_PATH;?>/images/slide-3.jpg" class="agllimage" alt="">
+						<img src="<?=SITE_TEMPLATE_PATH;?>/images/slide-3.jpg" alt="">
 						<div class="index__slider-text">
 							<p class="hdr">Оценка автомобилей и оборудования</p>
 							<p class="cena"><span class="from">от</span> 5&nbsp;000 ₽</p>
@@ -126,7 +126,7 @@
 						</div>
 					</div>
 					<div>
-						<img src="<?=SITE_TEMPLATE_PATH;?>/images/slide-4.jpg" class="agllimage" alt="">
+						<img src="<?=SITE_TEMPLATE_PATH;?>/images/slide-4.jpg" alt="">
 						<div class="index__slider-text">
 							<p class="hdr">Оценка бизнеса</p>
 							<p class="cena"><span class="from">от</span> 20&nbsp;000 ₽</p>
@@ -134,7 +134,7 @@
 						</div>
 					</div>
 					<div>
-						<img src="<?=SITE_TEMPLATE_PATH;?>/images/slide-5.jpg" class="agllimage" alt="">
+						<img src="<?=SITE_TEMPLATE_PATH;?>/images/slide-5.jpg" alt="">
 						<div class="index__slider-text">
 							<p class="hdr">Оценка нематериальных активов</p>
 							<p class="cena"><span class="from">от</span> 20&nbsp;000 ₽</p>

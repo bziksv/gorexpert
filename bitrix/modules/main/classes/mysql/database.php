@@ -789,6 +789,11 @@ abstract class CDatabaseMysql extends CAllDatabase
 
 abstract class CDBResultMysql extends CAllDBResult
 {
+	function __construct($res = null)
+	{
+		$this->CDBResultMysql($res);
+	}
+
 	function CDBResultMysql($res = null)
 	{
 		parent::CAllDBResult($res);

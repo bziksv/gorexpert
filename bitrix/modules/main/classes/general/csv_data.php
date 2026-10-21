@@ -25,6 +25,11 @@ class CCSVData
 	var $__buffer_size = 0;
 	var $__hasBOM = false;
 
+	function __construct($fields_type = "R", $first_header = false)
+	{
+		$this->CCSVData($fields_type, $first_header);
+	}
+
 	function CCSVData($fields_type = "R", $first_header = false)
 	{
 		$this->SetFieldsType($fields_type);

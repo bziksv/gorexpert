@@ -450,7 +450,7 @@ class CCheckListResult
 		{
 			$arInsert = $DB->PrepareInsert("b_checklist", $arFields);
 			$strSql ="INSERT INTO b_checklist(".$arInsert[0].", DATE_CREATE) ".
-					"VALUES(".$arInsert[1].", '".ConvertTimeStamp(mktime(), "FULL")."')";
+					"VALUES(".$arInsert[1].", '".ConvertTimeStamp(time(), "FULL")."')";
 		}
 
 		$arBinds = array(

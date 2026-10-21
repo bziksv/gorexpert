@@ -235,7 +235,7 @@ class CIBlockElement extends CAllIBlockElement
 	 * @param array $arSelectFields
 	 * @return integer|CIBlockResult
 	 */
-	function GetList($arOrder=array("SORT"=>"ASC"), $arFilter=array(), $arGroupBy=false, $arNavStartParams=false, $arSelectFields=array())
+	public static function GetList($arOrder=array("SORT"=>"ASC"), $arFilter=array(), $arGroupBy=false, $arNavStartParams=false, $arSelectFields=array())
 	{
 		/*
 		Filter combinations:

@@ -16,6 +16,11 @@ class CDataXMLNode
 	var $attributes;
 	var $_parent;
 
+	function __construct()
+	{
+		$this->CDataXMLNode();
+	}
+
 	function CDataXMLNode()
 	{
 	}
@@ -232,6 +237,11 @@ class CDataXMLDocument
 	var $children;
 	var $root;
 
+	function __construct()
+	{
+		$this->CDataXMLDocument();
+	}
+
 	function CDataXMLDocument()
 	{
 	}
@@ -340,6 +350,11 @@ class CDataXML
 	var $TrimWhiteSpace;
 
 	var $delete_ns = true;
+
+	function __construct($TrimWhiteSpace = True)
+	{
+		$this->CDataXML($TrimWhiteSpace);
+	}
 
 	function CDataXML($TrimWhiteSpace = True)
 	{

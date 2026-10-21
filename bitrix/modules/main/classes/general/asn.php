@@ -50,7 +50,7 @@ class CASNReader
 	public function GetValue()    
 	{
 		$result = $this->value;
-		if(ord($result{0}) == 0x00)
+		if(ord($result[0]) == 0x00)
 			$result = CUtil::BinSubstr($result, 1);
 		return $result;
 	}

@@ -1303,6 +1303,11 @@ class CDBRestore
 		return mysql_query($sql, $this->db_Conn);
 	}
 
+	function __construct($DBHost, $DBName, $DBLogin, $DBPassword, $DBdump, $d_pos)
+	{
+		$this->CDBRestore($DBHost, $DBName, $DBLogin, $DBPassword, $DBdump, $d_pos);
+	}
+
 	function CDBRestore($DBHost, $DBName, $DBLogin, $DBPassword, $DBdump, $d_pos)
 	{
 		$this->DBHost = $DBHost;

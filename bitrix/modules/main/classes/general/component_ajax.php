@@ -40,6 +40,11 @@ class CComponentAjax
 
 	var $__nav_params = null;
 
+	function __construct($componentName, $componentTemplate, &$arParams, $parentComponent)
+	{
+		$this->CComponentAjax($componentName, $componentTemplate, $parentComponent);
+	}
+
 	function CComponentAjax($componentName, $componentTemplate, &$arParams, $parentComponent)
 	{
 		/** @global CMain $APPLICATION */

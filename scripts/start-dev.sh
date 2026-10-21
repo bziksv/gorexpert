@@ -3,7 +3,7 @@ set -e
 cd "$(dirname "$0")/.."
 PROJECT="$(pwd)"
 SITE_ROOT="$(pwd)"
-PHP_BIN=/opt/homebrew/opt/php@7.4
+PHP_BIN=/opt/homebrew/opt/php@8.2
 NGINX=/opt/homebrew/bin/nginx
 RUN_DIR="$PROJECT/.local/run"
 ENV_FILE="$PROJECT/.local/db.env"
@@ -52,7 +52,8 @@ sed "s|RUN_DIR|$RUN_DIR|g" \
   "$PROJECT/.local/php/fpm.conf" > "$RUN_DIR/fpm.conf"
 sed "s|USER_NAME|$USER_NAME|g; s|USER_GROUP|$USER_GROUP|g; s|RUN_DIR|$RUN_DIR|g" \
   "$PROJECT/.local/php/pools.conf" > "$RUN_DIR/pools.conf"
-cp "$PROJECT/.local/php/php.ini" "$RUN_DIR/php.ini"
+sed "s|SITE_ROOT|$SITE_ROOT|g; s|RUN_DIR|$RUN_DIR|g" \
+  "$PROJECT/.local/php/php.ini" > "$RUN_DIR/php.ini"
 
 export PHPRC="$RUN_DIR/php.ini"
 
@@ -72,7 +73,7 @@ HTTP=$(curl -sS -o /tmp/gorexpert-check.html -w '%{http_code}' --max-time 120 ht
 BYTES=$(wc -c < /tmp/gorexpert-check.html 2>/dev/null | tr -d ' ')
 
 echo "http://127.0.0.1:8096/ → HTTP $HTTP (${BYTES:-0} bytes)"
-echo "php-fpm :9096 (PHP 7.4, ondemand, max 2 workers, 512M)"
+echo "php-fpm :9096 (PHP 8.2, ondemand, max 2 workers, 512M)"
 echo "stop: ./scripts/stop-dev.sh"
 
 if [ "$HTTP" = "000" ] || [ "${BYTES:-0}" -lt 10000 ]; then

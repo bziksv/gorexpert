@@ -1457,7 +1457,12 @@ class CControllerClientRequestTo extends __CControllerPacketRequest
 	var $debug_const = "CONTROLLER_CLIENT_DEBUG";
 	var $debug_file_const = "CONTROLLER_CLIENT_LOG_DIR";
 
-	function CControllerClientRequestTo($operation, $arParameters = Array())
+		function __construct($operation, $arParameters = Array())
+	{
+		$this->CControllerClientRequestTo($operation, $arParameters);
+	}
+
+function CControllerClientRequestTo($operation, $arParameters = Array())
 	{
 		$this->member_id = COption::GetOptionString("main", "controller_member_id", "");
 		$this->secret_id = COption::GetOptionString("main", "controller_member_secret_id", "");
@@ -1504,6 +1509,11 @@ class CControllerClientResponseFrom extends __CControllerPacketResponse
 	var $debug_const = "CONTROLLER_CLIENT_DEBUG";
 	var $debug_file_const = "CONTROLLER_CLIENT_LOG_DIR";
 
+	function __construct($oPacket)
+	{
+		$this->CControllerClientResponseFrom($oPacket);
+	}
+
 	function CControllerClientResponseFrom($oPacket)
 	{
 		$this->_InitFromRequest($oPacket, array());
@@ -1514,6 +1524,11 @@ class CControllerClientRequestFrom extends __CControllerPacketRequest
 {
 	var $debug_const = "CONTROLLER_CLIENT_DEBUG";
 	var $debug_file_const = "CONTROLLER_CLIENT_LOG_DIR";
+
+	function __construct()
+	{
+		$this->CControllerClientRequestFrom();
+	}
 
 	function CControllerClientRequestFrom()
 	{
@@ -1549,6 +1564,11 @@ class CControllerClientResponseTo extends __CControllerPacketResponse
 {
 	var $debug_const = "CONTROLLER_CLIENT_DEBUG";
 	var $debug_file_const = "CONTROLLER_CLIENT_LOG_DIR";
+
+	function __construct($oPacket = false)
+	{
+		$this->CControllerClientResponseTo($oPacket);
+	}
 
 	function CControllerClientResponseTo($oPacket = false)
 	{

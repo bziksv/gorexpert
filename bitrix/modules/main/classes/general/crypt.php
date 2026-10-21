@@ -66,6 +66,11 @@ class CCrypt
 	var $errorMessage = "";
 
 
+	function __construct($blockCipherMode = CRYPT_MODE_CBC, $cipher = "blowfish", $key = "", $iv = "")
+	{
+		$this->CCrypt($blockCipherMode, $cipher, $key, $iv);
+	}
+
 	function CCrypt($blockCipherMode = CRYPT_MODE_CBC, $cipher = "blowfish", $key = "", $iv = "")
 	{
 		$cipher = strtolower($cipher);
@@ -303,6 +308,11 @@ class CSteganos
 	var $dataSize;
 	var $offset;
 
+
+	function __construct()
+	{
+		$this->CSteganos();
+	}
 
 	function CSteganos()
 	{
@@ -954,6 +964,11 @@ class CCryptblowfish
 	var $blockSize = 8;
 
 
+	function __construct($key)
+	{
+		$this->CCryptblowfish($key);
+	}
+
 	function CCryptblowfish($key)
 	{
 		$this->arSubkeys = array(
@@ -1120,6 +1135,11 @@ class CCryptrc4
 
 	var $blockSize = 0;
 
+
+	function __construct($key)
+	{
+		$this->CCryptrc4($key);
+	}
 
 	function CCryptrc4($key)
 	{

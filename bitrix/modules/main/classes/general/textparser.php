@@ -57,6 +57,11 @@ class CTextParser
 
 	/* @deprecated */ public $allowImgExt = "gif|jpg|jpeg|png";
 
+	function __construct()
+	{
+		$this->CTextParser();
+	}
+
 	function CTextParser()
 	{
 		$this->pathToSmile = '';
@@ -332,12 +337,12 @@ class CTextParser
 
 			$word_separator = str_replace("?", "", $this->wordSeparator);
 			$patt = array("/(?<=^|[".$word_separator."]|\\s)(?<!\\[nomodify\\]|<nomodify>)((".$this->getAnchorSchemes()."):\\/\\/[._:a-z0-9@-].*?)(?=[\\s'\"{}\\[\\]]|&quot;|\$)/is".BX_UTF_PCRE_MODIFIER);
-			if (self::strpos($text, "“") !== false)
-				$patt[] = "/(?<=[".self::chr("“")."])(?<!\\[nomodify\\]|<nomodify>)((".$this->getAnchorSchemes()."):\\/\\/[._:a-z0-9@-].*?)(?=[".self::chr("”")."])/is".BX_UTF_PCRE_MODIFIER;
-			if (self::strpos($text, "‘") !== false)
-				$patt[] = "/(?<=[".self::chr("‘")."])(?<!\\[nomodify\\]|<nomodify>)((".$this->getAnchorSchemes()."):\\/\\/[._:a-z0-9@-].*?)(?=[".self::chr("’")."])/is".BX_UTF_PCRE_MODIFIER;
-			if (self::strpos($text, "«") !== false)
-				$patt[] = "/(?<=[".self::chr("«")."])(?<!\\[nomodify\\]|<nomodify>)((".$this->getAnchorSchemes()."):\\/\\/[._:a-z0-9@-].*?)(?=[".self::chr("»")."])/is".BX_UTF_PCRE_MODIFIER;
+			if (self::strpos($text, "") !== false)
+				$patt[] = "/(?<=[".self::chr("")."])(?<!\\[nomodify\\]|<nomodify>)((".$this->getAnchorSchemes()."):\\/\\/[._:a-z0-9@-].*?)(?=[".self::chr("")."])/is".BX_UTF_PCRE_MODIFIER;
+			if (self::strpos($text, "") !== false)
+				$patt[] = "/(?<=[".self::chr("")."])(?<!\\[nomodify\\]|<nomodify>)((".$this->getAnchorSchemes()."):\\/\\/[._:a-z0-9@-].*?)(?=[".self::chr("")."])/is".BX_UTF_PCRE_MODIFIER;
+			if (self::strpos($text, "") !== false)
+				$patt[] = "/(?<=[".self::chr("")."])(?<!\\[nomodify\\]|<nomodify>)((".$this->getAnchorSchemes()."):\\/\\/[._:a-z0-9@-].*?)(?=[".self::chr("")."])/is".BX_UTF_PCRE_MODIFIER;
 
 			$text = preg_replace_callback($patt, array($this, "preconvertUrl"), $text);
 		}

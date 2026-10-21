@@ -41,6 +41,11 @@ class CWizardBase
 
 	var $package;
 
+	function __construct($wizardName, $package)
+	{
+		$this->CWizardBase($wizardName, $package);
+	}
+
 	function CWizardBase($wizardName, $package)
 	{
 		$this->wizardName = $wizardName;
@@ -694,6 +699,11 @@ class CWizardStep
 	var $content;
 
 	var $autoSubmit;
+
+	function __construct()
+	{
+		$this->CWizardStep();
+	}
 
 	function CWizardStep()
 	{

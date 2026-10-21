@@ -86,7 +86,10 @@ if((isset($_SERVER['REDIRECT_STATUS']) && $_SERVER['REDIRECT_STATUS'] == '404') 
 			$_GET += $vars;
 			$_REQUEST += $vars;
 			if (ini_get_bool("register_globals"))
-				$GLOBALS += $vars;
+			{
+				foreach ($vars as $key => $val)
+					$GLOBALS[$key] = $val;
+			}
 
 			$_SERVER["QUERY_STRING"] = $QUERY_STRING = CHTTP::urnEncode($params);
 		}

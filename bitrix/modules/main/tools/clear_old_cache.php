@@ -10,7 +10,7 @@ require($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/main/include/prolog_before.ph
 
 $dLog = fopen($strLOG_FILE, "wb");
 fwrite($dLog, date("r")."\n");
-fwrite($dLog, mktime()."\n");
+fwrite($dLog, time()."\n");
 
 $iGoodNum = 0;
 $iOldNum = 0;

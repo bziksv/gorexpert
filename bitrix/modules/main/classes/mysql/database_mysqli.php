@@ -160,6 +160,11 @@ class CDatabase extends CDatabaseMysql
 
 class CDBResult extends CDBResultMysql
 {
+	function __construct($res = null)
+	{
+		$this->CDBResult($res);
+	}
+
 	function CDBResult($res = null)
 	{
 		parent::CDBResultMysql($res);
@@ -167,6 +172,8 @@ class CDBResult extends CDBResultMysql
 
 	protected function FetchRow()
 	{
+		if (!is_object($this->result))
+			return false;
 		return mysqli_fetch_assoc($this->result);
 	}
 

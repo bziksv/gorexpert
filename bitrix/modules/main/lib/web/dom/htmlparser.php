@@ -1,7 +1,7 @@
 <?php
 namespace Bitrix\Main\Web\DOM;
 
-use \Bitrix\Main\Text\String;
+use \Bitrix\Main\Text\BinaryString;
 class HtmlParser extends Parser
 {
 	public $debugTime = 0;

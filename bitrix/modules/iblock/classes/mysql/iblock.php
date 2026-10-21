@@ -219,7 +219,7 @@ class CIBlock extends CAllIBlock
 		return $res;
 	}
 
-	function _Upper($str)
+	public static function _Upper($str)
 	{
 		return $str;
 	}
@@ -261,7 +261,7 @@ class CIBlock extends CAllIBlock
 		return $rs;
 	}
 
-	function _Order($by, $order, $default_order, $nullable = true)
+	public static function _Order($by, $order, $default_order, $nullable = true)
 	{
 		$o = parent::_Order($by, $order, $default_order, $nullable);
 		//$o[0] - bNullsFirst

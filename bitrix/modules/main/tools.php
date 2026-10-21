@@ -2776,6 +2776,12 @@ function bxstrrpos($haystack, $needle)
 
 function Rel2Abs($curdir, $relpath)
 {
+	// PHP 8+: menu ADDITIONAL_LINKS may contain nested arrays (custom multilevel menus)
+	if(!is_string($relpath) && !is_numeric($relpath))
+		return false;
+	$relpath = (string)$relpath;
+	$curdir = is_string($curdir) || is_numeric($curdir) ? (string)$curdir : "";
+
 	if($relpath == "")
 		return false;
 
@@ -3333,7 +3339,8 @@ function UnQuoteArr(&$arr, $syb = false, $preserve_nulls = false)
 	static $params = null;
 	if (!isset($params))
 	{
-		if (get_magic_quotes_gpc())
+		// PHP 8.0+: get_magic_quotes_gpc() removed — always treat as off
+		if (function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc())
 		{
 			//Magic quotes sybase works only when magic_quotes_gpc is turned on
 			if (ini_get_bool("magic_quotes_sybase"))
@@ -3686,7 +3693,8 @@ function FormDecode()
 			if(!isset($superglobals[$key]))
 				$toGlobals[$key] = $val;
 
-		$GLOBALS += $toGlobals;
+		foreach ($toGlobals as $key => $val)
+			$GLOBALS[$key] = $val;
 	}
 }
 
@@ -3867,7 +3875,8 @@ function InitURLParam($url=false)
 		parse_str($params, $HTTP_GET_VARS);
 		parse_str($params, $arr);
 		$_REQUEST += $arr;
-		$GLOBALS += $arr;
+		foreach ($arr as $key => $val)
+			$GLOBALS[$key] = $val;
 	}
 }
 
@@ -5320,7 +5329,12 @@ class CHTTP
 	private $redirectsMade = 0;
 	private static $lastSetStatus = "";
 
-	public function CHTTP()
+	public function __construct()
+	{
+		$this->CHTTP();
+	}
+
+	function CHTTP()
 	{
 		$this->user_agent = 'BitrixSM ' . __CLASS__ . ' class';
 	}

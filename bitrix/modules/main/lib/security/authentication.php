@@ -172,8 +172,8 @@ class Authentication
 			/** @var $lastAuth \Bitrix\Main\Type\DateTime */
 			$lastAuth = $record["LAST_AUTH"];
 			if ($policy["MAX_STORE_NUM"] < $cnt
-				|| ($record["TEMP_HASH"] === "N" && mktime() - $policy["STORE_TIMEOUT"] * 60 > $lastAuth->getTimestamp())
-				|| ($record["TEMP_HASH"] === "Y" && mktime() - $policy["SESSION_TIMEOUT"] * 60 > $lastAuth->getTimestamp())
+				|| ($record["TEMP_HASH"] === "N" && time() - $policy["STORE_TIMEOUT"] * 60 > $lastAuth->getTimestamp())
+				|| ($record["TEMP_HASH"] === "Y" && time() - $policy["SESSION_TIMEOUT"] * 60 > $lastAuth->getTimestamp())
 			)
 			{
 				$connection->queryExecute("DELETE FROM b_user_stored_auth WHERE ID = ".$record["ID"]);

@@ -12,6 +12,11 @@ class iblock extends CModule
 
 	var $errors;
 
+	function __construct()
+	{
+		$this->iblock();
+	}
+
 	function iblock()
 	{
 		$arModuleVersion = array();

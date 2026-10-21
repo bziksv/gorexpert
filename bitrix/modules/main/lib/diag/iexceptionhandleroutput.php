@@ -3,5 +3,5 @@ namespace Bitrix\Main\Diag;
 
 interface IExceptionHandlerOutput
 {
-	function renderExceptionMessage(\Exception $exception, $debug = false);
+	function renderExceptionMessage(\Throwable $exception, $debug = false);
 }

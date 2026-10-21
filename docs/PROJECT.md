@@ -56,15 +56,47 @@ Host gorexpert
 
 ### Деплой на prod (по запросу)
 
-```bash
-# Пример: шаблон
-scp bitrix/templates/gorexpert/header.php \
-    root@45.90.35.63:/var/www/gorexpert/data/www/gorexpert.ru/bitrix/templates/gorexpert/
+Сайт на проде — git-репозиторий с remote `https://github.com/bziksv/gorexpert`.  
+Пользователь веб-сервера / PHP: **`gorexpert:gorexpert`**.
 
-# Очистка кеша
-ssh root@45.90.35.63 \
-    "rm -rf /var/www/gorexpert/data/www/gorexpert.ru/bitrix/cache/*"
+```bash
+ssh root@45.90.35.63
+cd /var/www/gorexpert/data/www/gorexpert.ru
+
+git fetch origin main
+git reset --hard FETCH_HEAD
+
+# ОБЯЗАТЕЛЬНО: git от root оставляет файлы root:root —
+# без этого Битрикс не сможет редактировать файлы в админке
+chown -R gorexpert:gorexpert /var/www/gorexpert/data/www/gorexpert.ru
+find . -type d -exec chmod 755 {} +
+find . -type f -exec chmod 644 {} +
+for d in bitrix/cache bitrix/managed_cache bitrix/stack_cache bitrix/html_pages bitrix/tmp upload; do
+  [ -d "$d" ] && find "$d" -type d -exec chmod 775 {} + && find "$d" -type f -exec chmod 664 {} +
+done
+
+rm -rf bitrix/cache/* bitrix/managed_cache/* bitrix/html_pages/*
 ```
+
+Одной командой с локальной машины:
+
+```bash
+ssh root@45.90.35.63 'set -e
+SITE=/var/www/gorexpert/data/www/gorexpert.ru
+cd "$SITE"
+git fetch origin main && git reset --hard FETCH_HEAD
+chown -R gorexpert:gorexpert "$SITE"
+find "$SITE" -type d -exec chmod 755 {} +
+find "$SITE" -type f -exec chmod 644 {} +
+for d in bitrix/cache bitrix/managed_cache bitrix/stack_cache bitrix/html_pages bitrix/tmp upload; do
+  [ -d "$SITE/$d" ] && find "$SITE/$d" -type d -exec chmod 775 {} + && find "$SITE/$d" -type f -exec chmod 664 {} +
+done
+rm -rf bitrix/cache/* bitrix/managed_cache/* bitrix/html_pages/*
+'
+```
+
+> **Важно:** секреты (`dbconn.php`, `.settings.php`, `license_key.php`, `upload/`) в git не входят — на проде они остаются локальными и при `git reset` не затираются.  
+> Если после деплоя в админке «Проверка доступа» ругается на чтение/запись — почти всегда забыли `chown -R gorexpert:gorexpert`.
 
 ---
 
@@ -106,12 +138,18 @@ bitrix/php_interface/           (after_connect.php, dbconn)
 | `arturgolubev.lazyload` | Ленивая загрузка изображений |
 | `prime.cleaner` | Очистка / обслуживание |
 
-### Патч для PHP 7.4+
+### PHP 8.2 (локальный стек и патчи ядра)
 
-Ядро Битрикс 16.0.9 использует класс `Bitrix\Main\Text\String`, зарезервированный в PHP 7.1+. Для локальной разработки применён патч:
+Локально: Homebrew **php@8.2** FPM. Битрикс 16.0.9 из коробки на 8.x не стартует — в репозитории лежит слой совместимости.
 
-- `bitrix/modules/main/lib/text/binarystring.php` — полный аналог старого `String`
-- ~15 файлов в `bitrix/modules/main/` — `use` и вызовы заменены на `BinaryString`
+Подробности: **[docs/PHP82.md](PHP82.md)**. Проверка: `./scripts/verify-php82.sh`.
+
+Кратко:
+
+- полифиллы: `bitrix/php_interface/php82-polyfills.php` (+ `init.php`)
+- `__construct` для PHP4-конструкторов в `bitrix/modules`
+- правки `$GLOBALS += …`, curly braces, nested ternary, `mktime()` → `time()`, `\Throwable` в exception handler
+- патч `String` → `BinaryString` (PHP 7.1+)
 
 ---
 
@@ -165,9 +203,9 @@ gorexpert/                      — workspace (вне git)
 
 ## Локальная разработка
 
-Без Docker. Homebrew **nginx** + **PHP 7.4 FPM** + **MySQL**.
+Без Docker. Homebrew **nginx** + **PHP 8.2 FPM** (`php@8.2`) + **MySQL**.
 
-> **Важно:** ядро Битрикс **16.0.9** требует патча `String` → `BinaryString` в `bitrix/modules/main/lib/text/` (уже применён локально) для работы на PHP 7.1+.
+> **Важно:** ядро Битрикс **16.0.9** требует патча `String` → `BinaryString` в `bitrix/modules/main/lib/text/` (уже применён локально) для работы на PHP 7.1+ / 8.x.
 
 ```bash
 cd gorexpert.ru

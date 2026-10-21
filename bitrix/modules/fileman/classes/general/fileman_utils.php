@@ -1484,6 +1484,11 @@ class CFilemanUtilDir
 	var $cntDir = 0;
 	var $cntFile = 0;
 
+	function __construct($dir, $Params)
+	{
+		$this->CFilemanUtilDir($dir, $Params);
+	}
+
 	function CFilemanUtilDir($dir, $Params)
 	{
 		$this->dir = str_replace('\\','/',$dir);

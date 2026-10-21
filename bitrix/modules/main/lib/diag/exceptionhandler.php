@@ -150,21 +150,30 @@ class ExceptionHandler
 
 		if ($this->debug)
 		{
-			assert_options(ASSERT_ACTIVE, 1);
-			assert_options(ASSERT_WARNING, 0);
-			assert_options(ASSERT_BAIL, 0);
-			assert_options(ASSERT_QUIET_EVAL, 0);
-			assert_options(ASSERT_CALLBACK, array($this, "handleAssertion"));
+			error_reporting($this->handledErrorsTypes);
+			if (function_exists('assert_options') && defined('ASSERT_ACTIVE'))
+			{
+				assert_options(ASSERT_ACTIVE, 1);
+				if (defined('ASSERT_WARNING'))
+					assert_options(ASSERT_WARNING, 0);
+				if (defined('ASSERT_BAIL'))
+					assert_options(ASSERT_BAIL, 0);
+				if (defined('ASSERT_QUIET_EVAL'))
+					assert_options(ASSERT_QUIET_EVAL, 0);
+				if (defined('ASSERT_CALLBACK'))
+					assert_options(ASSERT_CALLBACK, array($this, "handleAssertion"));
+			}
 		}
 		else
 		{
-			assert_options(ASSERT_ACTIVE, 0);
+			if (function_exists('assert_options') && defined('ASSERT_ACTIVE'))
+				assert_options(ASSERT_ACTIVE, 0);
 		}
 
 		$this->isInitialized = true;
 	}
 
-	public function handleException(\Exception $exception)
+	public function handleException(\Throwable $exception)
 	{
 		$this->writeToLog($exception, ExceptionHandlerLog::UNCAUGHT_EXCEPTION);
 		$out = $this->getHandlerOutput();

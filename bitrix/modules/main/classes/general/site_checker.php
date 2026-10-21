@@ -2451,6 +2451,11 @@ class CSiteCheckerTest
 
 class CSearchFiles
 {
+	function __construct()
+	{
+		$this->CSearchFiles();
+	}
+
 	function CSearchFiles()
 	{
 		$this->StartTime = time();

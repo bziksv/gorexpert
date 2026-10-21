@@ -6,6 +6,11 @@ class CAdminSubSorting extends CAdminSorting
 {
 	public $list_url;
 
+	function __construct($table_id, $by_initial = false, $order_initial = false, $by_name = "by", $ord_name = "order", $list_url)
+	{
+		$this->CAdminSubSorting($table_id, $by_initial, $order_initial, $by_name, $ord_name, $list_url);
+	}
+
 	function CAdminSubSorting($table_id, $by_initial = false, $order_initial = false, $by_name = "by", $ord_name = "order", $list_url)
 	{
 		global $APPLICATION;
@@ -109,6 +114,11 @@ class CAdminSubList extends CAdminList
 	 * @param string $list_url
 	 * @param bool|array $arHideHeaders
 	 */
+	function __construct($table_id, $sort = false, $list_url, $arHideHeaders = false)
+	{
+		$this->CAdminSubList($table_id, $sort, $list_url, $arHideHeaders);
+	}
+
 	function CAdminSubList($table_id, $sort = false, $list_url, $arHideHeaders = false)
 	{
 		global $APPLICATION;
@@ -841,6 +851,11 @@ class CAdminSubListRow extends CAdminListRow
 	public $arFieldNames = array(); //add
 	public $boolBX = false; // add
 
+	function __construct(&$aHeaders, $table_id)
+	{
+		$this->CAdminSubListRow($table_id);
+	}
+
 	function CAdminSubListRow(&$aHeaders, $table_id)
 	{
 		parent::CAdminListRow($aHeaders, $table_id);
@@ -1054,7 +1069,12 @@ class CAdminSubListRow extends CAdminListRow
 
 class CAdminSubContextMenu extends CAdminContextMenu
 {
-	function CAdminSubContextMenu($items, $additional_items = array())
+		function __construct($items, $additional_items = array())
+	{
+		$this->CAdminSubContextMenu($items, $additional_items);
+	}
+
+function CAdminSubContextMenu($items, $additional_items = array())
 	{
 		$this->CAdminContextMenu($items, $additional_items);
 	}
@@ -1175,6 +1195,11 @@ class CAdminSubForm extends CAdminForm
 	var $strListPostParams = '';
 	var $arListPostParams = array();
 	var $boolShowSettings = false;
+
+	function __construct($name, $tabs, $bCanExpand = true, $bDenyAutosave = false, $list_url = '', $boolShowSettings = false)
+	{
+		$this->CAdminSubForm($name, $tabs, $bCanExpand, $bDenyAutosave, $list_url, $boolShowSettings);
+	}
 
 	function CAdminSubForm($name, $tabs, $bCanExpand = true, $bDenyAutosave = false, $list_url = '', $boolShowSettings = false)
 	{
@@ -1547,6 +1572,11 @@ class CAdminSubResult extends CAdminResult
 	var $list_url;
 	var $list_url_params;
 
+	function __construct($res, $table_id, $list_url)
+	{
+		$this->CAdminSubResult($res, $table_id, $list_url);
+	}
+
 	function CAdminSubResult($res, $table_id, $list_url)
 	{
 		$this->list_url = $list_url;
@@ -1683,6 +1713,11 @@ class CAdminSubResult extends CAdminResult
 
 class CAdminSubMessage extends CAdminMessage
 {
+	function __construct($message, $exception=false)
+	{
+		$this->CAdminSubMessage($message, $exception);
+	}
+
 	function CAdminSubMessage($message, $exception=false)
 	{
 		parent::CAdminMessage($message, $exception);

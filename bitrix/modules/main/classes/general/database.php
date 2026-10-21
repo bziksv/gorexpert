@@ -623,7 +623,12 @@ abstract class CAllDBResult
 	var $resultObject = null;
 
 	/** @param CDBResult $res */
-	public function CAllDBResult($res = null)
+	public function __construct($res = null)
+	{
+		$this->CAllDBResult($res);
+	}
+
+	function CAllDBResult($res = null)
 	{
 		$obj = is_object($res);
 		if($obj && is_subclass_of($res, "CAllDBResult"))

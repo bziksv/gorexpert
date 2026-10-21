@@ -487,7 +487,22 @@ function ExecuteModuleEventEx($arEvent, $arParams = array())
 
 		//php bug: http://bugs.php.net/bug.php?id=47948
 		class_exists($arEvent["TO_CLASS"]);
-		return call_user_func_array(array($arEvent["TO_CLASS"], $arEvent["TO_METHOD"]), $args);
+		$callback = array($arEvent["TO_CLASS"], $arEvent["TO_METHOD"]);
+		// PHP 8+: non-static methods cannot be called statically via call_user_func_array
+		if (!is_callable($callback))
+		{
+			try
+			{
+				$callback = array(new $arEvent["TO_CLASS"](), $arEvent["TO_METHOD"]);
+			}
+			catch (\Throwable $e)
+			{
+				return $r;
+			}
+		}
+		if (!is_callable($callback))
+			return $r;
+		return call_user_func_array($callback, $args);
 	}
 	else
 	{

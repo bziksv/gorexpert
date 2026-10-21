@@ -104,7 +104,7 @@ class CSpellchecker
 //				return true;
 //			}
 //
-//			$first_let = $this->codeLetter(strtolower($word{0}));
+//			$first_let = $this->codeLetter(strtolower($word[0]));
 //
 //			if (!isset($this->dic[$first_let]))
 //			{
@@ -161,7 +161,7 @@ class CSpellchecker
 //				$word = $APPLICATION->ConvertCharset($word, "UTF-8", "Windows-1251");
 //			}
 //
-//			$first_let = $this->codeLetter(strtolower($word{0}));
+//			$first_let = $this->codeLetter(strtolower($word[0]));
 //			$wordLen = strlen($word);
 //			$n = $wordLen;
 //			$lcount = count($this->letters);
@@ -223,7 +223,7 @@ class CSpellchecker
 //			}
 //			$path = $this->dic_path.'/dics/'.$this->lang.'_';
 //
-//			$letter = $this->codeLetter(strtolower($word{0}));
+//			$letter = $this->codeLetter(strtolower($word[0]));
 //			$path .= $letter.'.dic';
 //			if (!$handle = fopen($path, 'a'))
 //				return false;

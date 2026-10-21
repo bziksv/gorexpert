@@ -44,7 +44,7 @@
                 </ul>
             <?endif;?>
         </li>
-        <?if(count($item["CHILDS"])):?>
+        <?if(!empty($item["CHILDS"]) && is_array($item["CHILDS"])):?>
             <?foreach($item["CHILDS"] as $child):?>
                 <li><a href="<?=$child["PATH"]?>"><?=$child["NAME"]?></a></li>
             <?endforeach;?>

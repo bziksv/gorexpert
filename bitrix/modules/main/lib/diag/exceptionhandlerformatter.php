@@ -11,7 +11,7 @@ class ExceptionHandlerFormatter
 
 	const DELIMITER = '----------';
 
-	public static function format(\Exception $exception, $htmlMode = false, $level = 0)
+	public static function format(\Throwable $exception, $htmlMode = false, $level = 0)
 	{
 		$result = '['.get_class($exception).'] ';
 
@@ -62,7 +62,7 @@ class ExceptionHandlerFormatter
 		return $result;
 	}
 
-	protected static function getTrace(\Exception $exception)
+	protected static function getTrace(\Throwable $exception)
 	{
 		$backtrace = $exception->getTrace();
 
@@ -80,7 +80,7 @@ class ExceptionHandlerFormatter
 		return $result;
 	}
 
-	protected static function getMessage(\Exception $exception)
+	protected static function getMessage(\Throwable $exception)
 	{
 		return $exception->getMessage().' ('.$exception->getCode().')';
 	}

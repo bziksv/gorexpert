@@ -8,26 +8,33 @@ Class CArturgolubevCssinliner
 	const MODULE_ID = 'arturgolubev.cssinliner';
 	var $MODULE_ID = 'arturgolubev.cssinliner';
 	
-	function onBufferContent(&$bufferContent){
-		if(!UTools::checkStatus() || !CModule::IncludeModule(self::MODULE_ID) || defined('LOCK_CSSINLINER')) return false;
+	public static function onBufferContent(&$bufferContent){
+		try
+		{
+			if(!UTools::checkStatus() || !CModule::IncludeModule(self::MODULE_ID) || defined('LOCK_CSSINLINER')) return false;
 
-		if(UTools::getSetting('disable') == 'Y' || UTools::getSetting('disabled_'.SITE_ID) == 'Y') return false;
-		
-		if(!$stop && stripos($bufferContent, '<!DOCTYPE') === false) return false;
-			
-		$admin_debug = (UTools::getSetting('admin_debug') == "Y");
-		if($admin_debug)
-		{
-			$bufferContent = self::showDebug($bufferContent);
+			if(UTools::getSetting('disable') == 'Y' || UTools::getSetting('disabled_'.SITE_ID) == 'Y') return false;
+
+			if(stripos($bufferContent, '<!DOCTYPE') === false) return false;
+
+			$admin_debug = (UTools::getSetting('admin_debug') == "Y");
+			if($admin_debug)
+			{
+				$bufferContent = self::showDebug($bufferContent);
+			}
+
+			if(!UTools::isAdmin())
+			{
+				$bufferContent = self::replace($bufferContent);
+			}
 		}
-		
-		if(!UTools::isAdmin())
+		catch(\Throwable $e)
 		{
-			$bufferContent = self::replace($bufferContent);
+			// PHP 8.x: never blank the page if inliner fails
 		}
 	}
 	
-	function showDebug($bufferContent){
+	public static function showDebug($bufferContent){
 		preg_match_all('/\<link.*\>/sU', $bufferContent, $arLinks);
 		$ds = '<script>';
 			$ds .= 'console.log("'.GetMessage("ARTURGOLUBEV_CSSINLINER_DEBUG_TITLE").'");';
@@ -36,7 +43,7 @@ Class CArturgolubevCssinliner
 					continue;
 				
 				preg_match_all('/href=[\"\'](.*\.css).*[\"\']/sU', $link, $tmphref);
-				$cssitem = $tmphref[1][0];
+				$cssitem = isset($tmphref[1][0]) ? $tmphref[1][0] : '';
 				if($cssitem)
 				{
 					$ds .= 'console.log("'.$cssitem.'");';
@@ -49,7 +56,7 @@ Class CArturgolubevCssinliner
 		return $bufferContent;
 	}
 	
-	function baseOptimize($style, $useOptimize, $arDopSearch = array(), $arDopReplace = array()){
+	public static function baseOptimize($style, $useOptimize, $arDopSearch = array(), $arDopReplace = array()){
 		$arOptiSearch = array();
 		$arOptiReplace = array();
 
@@ -81,12 +88,16 @@ Class CArturgolubevCssinliner
 		$mergedReplace = array_merge($arOptiReplace, $arDopReplace);
 		
 		if(!empty($mergedSearch))
-			$style = preg_replace($mergedSearch, $mergedReplace, $style);
+		{
+			$replaced = preg_replace($mergedSearch, $mergedReplace, $style);
+			if($replaced !== null)
+				$style = $replaced;
+		}
 		
 		return $style;
 	}
 	
-	function _getOuterStyle($url){
+	public static function _getOuterStyle($url){
 		if(extension_loaded('curl')){
 			try{
 				$ch = curl_init();
@@ -105,55 +116,45 @@ Class CArturgolubevCssinliner
 		
 		return trim($style);
 	}
-	
-	function getOuterCss($url, $useOptimize = 'N', $arDopSearch = array(), $arDopReplace = array()){
+
+	/**
+	 * No CPHPCache here: StartDataCache uses output buffering and
+	 * destroys the page when called from OnEndBufferContent (PHP 8 / FPM).
+	 */
+	public static function getOuterCss($url, $useOptimize = 'N', $arDopSearch = array(), $arDopReplace = array()){
 		if(substr($url,0,2) == '//') $url = 'https:'.$url;
-		
-		$obCache = new CPHPCache();
-		
-		$timeSeconds = 86400;
+
+		static $cache = array();
 		$cacheId = md5($url.$useOptimize.serialize($arDopSearch).serialize($arDopReplace));
-		$cachePath = '/'.SITE_ID.'/arturgolubev.cssinliner/outer/';
-		
-		if($obCache->InitCache($timeSeconds, $cacheId, $cachePath))
-		{
-			$vars = $obCache->GetVars();
-			$style = $vars['style'];
-		}
-		elseif($obCache->StartDataCache())
-		{
-			$style = self::_getOuterStyle($url);
-			$style = self::baseOptimize($style, $useOptimize, $arDopSearch, $arDopReplace);
-			
-			$obCache->EndDataCache(array('style' => $style));
-		}
-		
+		if(isset($cache[$cacheId]))
+			return $cache[$cacheId];
+
+		$style = self::_getOuterStyle($url);
+		$style = self::baseOptimize($style, $useOptimize, $arDopSearch, $arDopReplace);
+		$cache[$cacheId] = $style;
+		return $style;
+	}
+
+	/**
+	 * No CPHPCache here: same OnEndBufferContent / ob conflict as getOuterCss.
+	 */
+	public static function getInnerCss($url, $useOptimize = 'N', $arDopSearch = array(), $arDopReplace = array()){
+		static $cache = array();
+		$cacheId = md5($url.$useOptimize.serialize($arDopSearch).serialize($arDopReplace));
+		if(isset($cache[$cacheId]))
+			return $cache[$cacheId];
+
+		$file = $_SERVER['DOCUMENT_ROOT'].$url;
+		if(!is_file($file))
+			return '';
+
+		$style = trim(file_get_contents($file));
+		$style = self::baseOptimize($style, $useOptimize, $arDopSearch, $arDopReplace);
+		$cache[$cacheId] = $style;
 		return $style;
 	}
 	
-	function getInnerCss($url, $useOptimize = 'N', $arDopSearch = array(), $arDopReplace = array()){
-		$obCache = new CPHPCache();
-		
-		$timeSeconds = 3600;
-		$cacheId = md5($url.$useOptimize.serialize($arDopSearch).serialize($arDopReplace));
-		$cachePath = '/'.SITE_ID.'/arturgolubev.cssinliner/'.basename($url);
-		
-		if($obCache->InitCache($timeSeconds, $cacheId, $cachePath))
-		{
-			$vars = $obCache->GetVars();
-			$style = $vars['style'];
-		}
-		elseif($obCache->StartDataCache())
-		{
-			$style = trim(file_get_contents($_SERVER['DOCUMENT_ROOT'].$url));
-			$style = self::baseOptimize($style, $useOptimize, $arDopSearch, $arDopReplace);
-			$obCache->EndDataCache(array('style' => $style));
-		}
-		
-		return $style;
-	}
-	
-	function replace($bufferContent){
+	public static function replace($bufferContent){
 		preg_match_all('/\<link.*\>/sU', $bufferContent, $arLinks);
 		if(!empty($arLinks[0]))
 		{
@@ -183,7 +184,7 @@ Class CArturgolubevCssinliner
 				if($google_fonts_inline == 'Y' && strstr($link, '//fonts.googleapis.com/css'))
 				{					
 					preg_match_all('/href=[\"\'](.*)[\"\']/sU', $link, $tmphref);
-					$cssItemHref = $tmphref[1][0];
+					$cssItemHref = isset($tmphref[1][0]) ? $tmphref[1][0] : '';
 					
 					if($cssItemHref)
 					{
@@ -215,7 +216,7 @@ Class CArturgolubevCssinliner
 					unset($style);
 					
 					preg_match_all('/href=[\"\'](.*\.css).*[\"\']/sU', $link, $tmphref);
-					$cssitem = $tmphref[1][0];
+					$cssitem = isset($tmphref[1][0]) ? $tmphref[1][0] : '';
 					if($cssitem)
 					{
 						$path = dirname($cssitem).'/';

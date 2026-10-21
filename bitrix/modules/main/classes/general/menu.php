@@ -21,6 +21,11 @@ class CMenu
 	/** @var CDebugInfo */
 	var $debug = null;
 
+	function __construct($type="left")
+	{
+		$this->CMenu($type);
+	}
+
 	function CMenu($type="left")
 	{
 		$this->type = $type;
@@ -299,6 +304,8 @@ class CMenu
 				{
 					foreach($ADDITIONAL_LINKS as $link)
 					{
+						if(!is_string($link) && !is_numeric($link))
+							continue;
 						$tested_link = trim(Rel2Abs($this->MenuDir, $link));
 						if(strlen($tested_link)>0)
 							$all_links[] = $tested_link;

@@ -53,6 +53,11 @@ class CWizard
 	var $__obLastStep = null;
 	var $__obFirstStep = null;
 
+	function __construct($wizardName)
+	{
+		$this->CWizard($wizardName);
+	}
+
 	function CWizard($wizardName)
 	{
 		$this->name = $wizardName;

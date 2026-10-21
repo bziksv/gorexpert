@@ -4650,6 +4650,11 @@ class CAllSite
 class _CLangDBResult extends CDBResult
 {
 
+	function __construct($res)
+	{
+		$this->_CLangDBResult($res);
+	}
+
 	function _CLangDBResult($res)
 	{
 		parent::CDBResult($res);
@@ -5273,7 +5278,12 @@ class CAllLang extends CAllSite
 class CApplicationException
 {
 	var $msg, $id;
-	public function CApplicationException($msg, $id = false)
+	public function __construct($msg, $id = false)
+	{
+		$this->CApplicationException($msg, $id);
+	}
+
+	function CApplicationException($msg, $id = false)
 	{
 		$this->msg = $msg;
 		$this->id = $id;
@@ -5293,7 +5303,12 @@ class CApplicationException
 class CAdminException extends CApplicationException
 {
 	var $messages;
-	public function CAdminException($messages, $id = false)
+	public function __construct($messages, $id = false)
+	{
+		$this->CAdminException($messages, $id);
+	}
+
+	function CAdminException($messages, $id = false)
 	{
 		//array("id"=>"", "text"=>""), array(...), ...
 		$this->messages = $messages;

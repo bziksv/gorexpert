@@ -6,9 +6,9 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/bitrix/modules/main/classes/general/xml
 $APPLICATION->SetAdditionalCSS('/bitrix/gadgets/bitrix/probki/styles.css');
 
 if($arGadgetParams["CITY"]!='')
-	$url = 'yasoft=barff&region='.substr($arGadgetParams["CITY"], 1).'&ts='.mktime();
+	$url = 'yasoft=barff&region='.substr($arGadgetParams["CITY"], 1).'&ts='.time();
 else
-	$url = 'ts='.mktime();
+	$url = 'ts='.time();
 
 $cache = new CPageCache();
 if($arGadgetParams["CACHE_TIME"]>0 && !$cache->StartDataCache($arGadgetParams["CACHE_TIME"], 'c'.$arGadgetParams["CITY"], "gdprobki"))

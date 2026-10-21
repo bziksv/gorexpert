@@ -1162,6 +1162,11 @@ class _CEventTypeResult extends CDBResult
 	var $LID = LANGUAGE_ID;
 	var $SITE_ID = SITE_ID;
 
+	function __construct($res, $arParams = array())
+	{
+		$this->_CEventTypeResult($res, $arParams);
+	}
+
 	function _CEventTypeResult($res, $arParams = array())
 	{
 		$this->type = empty($arParams["type"]) ? "type" : $arParams["type"];
