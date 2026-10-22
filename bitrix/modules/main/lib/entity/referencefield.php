@@ -67,7 +67,7 @@ class ReferenceField extends Field
 		}
 	}
 
-	public function validateValue($value, $row, Result $result)
+	public function validateValue($value, $primary, $row, Result $result)
 	{
 		throw new SystemException('Reference field doesn\'t support value set up and validation.');
 	}

@@ -256,7 +256,7 @@ function _get_iblocks_menu($arType)
 				"items" => $arItems,
 			);
 
-			if(!count($arItems))
+			if(!is_array($arItems) || !count($arItems))
 			{
 				$arMenuItem["more_url"][] = "iblock_element_edit.php?IBLOCK_ID=".$arIBlock["ID"]."&type=".$arType["ID"];
 				$arMenuItem["more_url"][] = "iblock_history_list.php?IBLOCK_ID=".$arIBlock["ID"]."&type=".$arType["ID"];

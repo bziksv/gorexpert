@@ -1096,7 +1096,7 @@ window.'.$this->name.' = new PopupMenu("'.$this->id.'"'.
 		return null;
 	}
 
-	function GetGlobalIconClass($old_icon)
+	public static function GetGlobalIconClass($old_icon)
 	{
 		switch($old_icon)
 		{
@@ -1342,7 +1342,7 @@ class CAdminFilter
 		}
 	}
 
-	private function err_mess()
+	private static function err_mess()
 	{
 		return "<br>Class: CAdminFilter<br>File: ".__FILE__;
 	}
@@ -1394,7 +1394,7 @@ class CAdminFilter
 		return true;
 	}
 
-	private function CheckFields($arFields)
+	private static function CheckFields($arFields)
 	{
 		/** @global CMain $APPLICATION */
 		global $APPLICATION;
@@ -1433,7 +1433,7 @@ class CAdminFilter
 		return true;
 	}
 
-	private function FieldsExcess($arFields)
+	private static function FieldsExcess($arFields)
 	{
 		$arResult = array();
 
@@ -1446,7 +1446,7 @@ class CAdminFilter
 		return $arResult;
 	}
 
-	private function FieldsDelHiddenEmpty($arFields)
+	private static function FieldsDelHiddenEmpty($arFields)
 	{
 		$arResult = array();
 
@@ -2194,7 +2194,7 @@ BX.Fix(right_bar, {type: 'right', limit_node: BX.previousSibling(right_bar)});
 		return '';
 	}
 
-	function GetActiveClassByID()
+	function GetActiveClassByID($icon_id = '')
 	{
 		return 'adm-btn-active';
 	}
@@ -2264,7 +2264,7 @@ class CAdminContextMenuList extends CAdminContextMenu
 			return parent::GetClassByID($icon_id);
 	}
 
-	function GetActiveClassByID($icon_id)
+	function GetActiveClassByID($icon_id = '')
 	{
 		if (substr($icon_id, 0, 7) == 'btn_new')
 			return 'adm-btn-save-active';
@@ -2420,7 +2420,7 @@ class CAdminResult extends CDBResult
 	 * @param int|array $nPageSize
 	 * @return int
 	 */
-	function GetNavSize($table_id=false, $nPageSize=20)
+	public static function GetNavSize($table_id=false, $nPageSize=20)
 	{
 		/** @global CMain $APPLICATION */
 		global $NavNum, $APPLICATION;
@@ -3291,7 +3291,8 @@ class CAdminList
 	{
 		if($_SERVER['REQUEST_METHOD']=='POST' && isset($_REQUEST['save'])  && check_bitrix_sessid())
 		{
-			$arrays = array(&$_POST, &$_REQUEST, &$GLOBALS);
+			// PHP 8+: cannot take &$GLOBALS; scrub FIELDS in $_POST/$_REQUEST by ref, $GLOBALS by key
+			$arrays = array(&$_POST, &$_REQUEST);
 			foreach($arrays as $i => $array)
 			{
 				if(is_array($array["FIELDS"]))
@@ -3307,6 +3308,23 @@ class CAdminList
 								{
 									unset($arrays[$i]["FIELDS"][$id][$key]);
 								}
+							}
+						}
+					}
+				}
+			}
+			if(is_array($GLOBALS["FIELDS"]))
+			{
+				foreach($GLOBALS["FIELDS"] as $id=>$fields)
+				{
+					if(is_array($fields))
+					{
+						$keys = array_keys($fields);
+						foreach($keys as $key)
+						{
+							if(($c = substr($key, 0, 1)) == '~' || $c == '=')
+							{
+								unset($GLOBALS["FIELDS"][$id][$key]);
 							}
 						}
 					}
@@ -4062,7 +4080,7 @@ class CAdminListRow
 
 	function __construct(&$aHeaders, $table_id)
 	{
-		$this->CAdminListRow($table_id);
+		$this->CAdminListRow($aHeaders, $table_id);
 	}
 
 	function CAdminListRow(&$aHeaders, $table_id)
@@ -4552,7 +4570,7 @@ class CAdminMessage
 		return false;
 	}
 
-	function ShowOldStyleError($message)
+	public static function ShowOldStyleError($message)
 	{
 		if(!empty($message))
 		{
@@ -4561,7 +4579,7 @@ class CAdminMessage
 		}
 	}
 
-	function ShowMessage($message)
+	public static function ShowMessage($message)
 	{
 		if(!empty($message))
 		{
@@ -4570,7 +4588,7 @@ class CAdminMessage
 		}
 	}
 
-	function ShowNote($message)
+	public static function ShowNote($message)
 	{
 		if(!empty($message))
 			CAdminMessage::ShowMessage(array("MESSAGE"=>$message, "TYPE"=>"OK"));

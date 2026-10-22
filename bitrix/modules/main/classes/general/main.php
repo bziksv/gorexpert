@@ -4227,7 +4227,7 @@ class CAllSite
 		return false;
 	}
 
-	public static function GetList(&$by, &$order, $arFilter=array())
+	public static function GetList($by = "sort", $order = "asc", $arFilter=array())
 	{
 		global $DB, $CACHE_MANAGER;
 
@@ -4343,7 +4343,7 @@ class CAllSite
 
 	public static function GetByID($ID)
 	{
-		return CSite::GetList($ord, $by, array("LID"=>$ID));
+		return CSite::GetList("sort", "asc", array("LID"=>$ID));
 	}
 
 	public static function GetArrayByID($ID)
@@ -4735,7 +4735,7 @@ class CAllLanguage
 {
 	var $LAST_ERROR;
 
-	public static function GetList(&$by, &$order, $arFilter=array())
+	public static function GetList($by = "sort", $order = "asc", $arFilter=array())
 	{
 		global $DB;
 		$arSqlSearch = array();
@@ -4803,7 +4803,7 @@ class CAllLanguage
 
 	public static function GetByID($ID)
 	{
-		return CLanguage::GetList($o, $b, array("LID"=>$ID));
+		return CLanguage::GetList("sort", "asc", array("LID"=>$ID));
 	}
 
 	public function CheckFields($arFields, $ID = false)

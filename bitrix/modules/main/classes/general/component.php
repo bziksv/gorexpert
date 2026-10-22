@@ -134,7 +134,7 @@ class CBitrixComponent
 		{
 			$this->setSiteId(SITE_ID);
 			$this->setLanguageId(LANGUAGE_ID);
-			$this->setSiteTemplateId(SITE_TEMPLATE_ID);
+			$this->setSiteTemplateId(defined("SITE_TEMPLATE_ID") ? SITE_TEMPLATE_ID : "");
 		}
 
 		$this->request = \Bitrix\Main\Context::getCurrent()->getRequest();

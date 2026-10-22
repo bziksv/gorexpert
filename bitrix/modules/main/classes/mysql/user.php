@@ -143,7 +143,7 @@ class CUser extends CAllUser
 		return $res;
 	}
 
-	public static function GetList(&$by, &$order, $arFilter=Array(), $arParams=Array())
+	public static function GetList($by = "id", $order = "asc", $arFilter=Array(), $arParams=Array())
 	{
 		/** @global CUserTypeManager $USER_FIELD_MANAGER */
 		global $DB, $USER_FIELD_MANAGER;
@@ -715,7 +715,7 @@ class CGroup extends CAllGroup
 		return $res;
 	}
 
-	public static function GetList(&$by, &$order, $arFilter=Array(), $SHOW_USERS_AMOUNT="N")
+	public static function GetList($by = "id", $order = "asc", $arFilter=Array(), $SHOW_USERS_AMOUNT="N")
 	{
 		global $DB;
 
@@ -1283,7 +1283,7 @@ class CGroup extends CAllGroup
 			}
 			else
 			{
-				// ÒÎËÜÊÎ ÄËß MYSQL!!! ÄËß ORACLE ÄÐÓÃÎÉ ÊÎÄ
+				// Ã’ÃŽÃ‹ÃœÃŠÃŽ Ã„Ã‹ÃŸ MYSQL!!! Ã„Ã‹ÃŸ ORACLE Ã„ÃÃ“ÃƒÃŽÃ‰ ÃŠÃŽÃ„
 				$cnt = $dbRes->SelectedRowsCount();
 			}
 

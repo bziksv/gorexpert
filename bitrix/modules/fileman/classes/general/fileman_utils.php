@@ -2,7 +2,7 @@
 IncludeModuleLangFile(__FILE__);
 class CFilemanUtils
 {
-	function InitScript($Params)
+	public static function InitScript($Params)
 	{
 		CUtil::InitJSCore(array('ajax', 'window'));
 
@@ -236,7 +236,7 @@ class CFilemanUtils
 		<?
 	}
 
-	function AppendLangMessages($Config)
+	public static function AppendLangMessages($Config)
 	{
 		$arLangMess = array();
 		if (in_array('search', $Config))
@@ -337,7 +337,7 @@ var FM_MESS = {0:0<?foreach($arLangMess as $m1 => $m2){echo ', '.$m1." : '".adds
 		endif;
 	}
 
-	function BuildDialogContent($site)
+	public static function BuildDialogContent($site)
 	{
 		global $APPLICATION;
 		$actUri = $APPLICATION->GetCurPage()."?search=Y&ssess=".CFilemanSearch::GetSearchSess();
@@ -692,7 +692,7 @@ CAdminFileDialog::ShowScript(Array
 		</div><?
 	}
 
-	function Request($action, $site)
+	public static function Request($action, $site)
 	{
 		global $USER;
 		if (!$USER->CanDoOperation('fileman_view_file_structure'))
@@ -997,19 +997,19 @@ CAdminFileDialog::ShowScript(Array
 		}
 	}
 
-	function GetTimeout()
+	public static function GetTimeout()
 	{
 		return COption::GetOptionString("fileman", "search_time_step", 5);
 	}
 
-	function NormalizePath($path)
+	public static function NormalizePath($path)
 	{
 		$path = CFileMan::SecurePathVar(Rel2Abs("/", $path));
 		$path = rtrim($path, '/');
 		return $path;
 	}
 
-	function TrimPath($path, $docRoot = false)
+	public static function TrimPath($path, $docRoot = false)
 	{
 		if ($docRoot === false)
 			$docRoot = $_SERVER["DOCUMENT_ROOT"];
@@ -1017,7 +1017,7 @@ CAdminFileDialog::ShowScript(Array
 		return strlen($path) > $l ? substr($path, $l) : '/';
 	}
 
-	function GetLastPathes()
+	public static function GetLastPathes()
 	{
 		$arPathes = CFileMan::GetLastPathes();
 		$arRes = array(
@@ -1029,7 +1029,7 @@ CAdminFileDialog::ShowScript(Array
 		return $arRes;
 	}
 
-	function GetModifyTime($path)
+	public static function GetModifyTime($path)
 	{
 		$path = CBXVirtualIoFileSystem::ConvertCharset($path);
 
@@ -1323,7 +1323,7 @@ class CFilemanSearch
 		return strlen($path) > $l ? substr($path, $l) : '/';
 	}
 
-	function CheckSearchSess($searchSess)
+	public static function CheckSearchSess($searchSess)
 	{
 		global $DB;
 
@@ -1343,7 +1343,7 @@ class CFilemanSearch
 		return !$res->Fetch();
 	}
 
-	function GetSearchResult($searchSess = '', $arOrder = array('date', 'desc'))
+	public static function GetSearchResult($searchSess = '', $arOrder = array('date', 'desc'))
 	{
 		global $DB;
 
@@ -1394,7 +1394,7 @@ class CFilemanSearch
 		return $searchRes;
 	}
 
-	function SetSearchResult($searchRes, $searchSess, $bClean = true)
+	public static function SetSearchResult($searchRes, $searchSess, $bClean = true)
 	{
 		global $DB;
 		$DB->Query("DELETE FROM b_file_search WHERE SESS_ID='".$DB->ForSql($searchSess)."'", false);
@@ -1415,13 +1415,13 @@ class CFilemanSearch
 		return $searchRes;
 	}
 
-	function DelFromSearchResult($searchSess, $path)
+	public static function DelFromSearchResult($searchSess, $path)
 	{
 		global $DB;
 		return $DB->Query("DELETE FROM b_file_search WHERE SESS_ID='".$DB->ForSql($searchSess)."' AND F_PATH='".$DB->ForSql($path)."'", false);
 	}
 
-	function RenameInSearchResult($searchSess, $pathFrom, $pathTo)
+	public static function RenameInSearchResult($searchSess, $pathFrom, $pathTo)
 	{
 		global $DB;
 
@@ -1438,13 +1438,13 @@ class CFilemanSearch
 		return preg_replace("/[^a-z0-9]/i", "", $ssess);
 	}
 
-	function GetSearchSess()
+	public static function GetSearchSess()
 	{
 		return md5($GLOBALS["USER"]->GetID()."+".uniqid(rand(), true));
 	}
 
 	// Delete all results older than 2 days
-	function CleanOldSearchResult()
+	public static function CleanOldSearchResult()
 	{
 		global $DB;
 		$d = date(CDatabase::DateFormatToPHP(CLang::GetDateFormat("FULL")), mktime(0, 0, 0, date("m")  , date("d") - 2, date("Y")));
@@ -1452,12 +1452,12 @@ class CFilemanSearch
 		$DB->Query($q, false);
 	}
 
-	function SaveConfig($arConfig)
+	public static function SaveConfig($arConfig)
 	{
 		CUserOptions::SetOption("fileman", "file_search_config", serialize($arConfig));
 	}
 
-	function GetConfig()
+	public static function GetConfig()
 	{
 		$arConfig = array();
 		$strAr = CUserOptions::GetOption("fileman", "file_search_config", false);
@@ -1870,12 +1870,12 @@ class CFilemanCopy
 		</script><?
 	}
 
-	function SaveConfig($arConfig)
+	public static function SaveConfig($arConfig)
 	{
 		CUserOptions::SetOption("fileman", "file_copy_move_config", serialize($arConfig));
 	}
 
-	function GetConfig()
+	public static function GetConfig()
 	{
 		$arConfig = array();
 		$strAr = CUserOptions::GetOption("fileman", "file_copy_move_config", false);
@@ -1885,7 +1885,7 @@ class CFilemanCopy
 		return $arConfig;
 	}
 
-	function GetAltFileName($absPath, $name, $bDir = false)
+	public static function GetAltFileName($absPath, $name, $bDir = false)
 	{
 		$io = CBXVirtualIo::GetInstance();
 		for ($i=1; $i <= 9999; $i++)

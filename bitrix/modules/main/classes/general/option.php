@@ -55,7 +55,7 @@ class CAllOption
 
 	public static function GetOptionInt($module_id, $name, $def="", $site=false)
 	{
-		return COption::GetOptionString($module_id, $name, $def, $site);
+		return (int)COption::GetOptionString($module_id, $name, $def, $site);
 	}
 
 	public static function SetOptionInt($module_id, $name, $value="", $desc="", $site="")
@@ -120,7 +120,7 @@ class CAllPageOption
 
 	public static function GetOptionInt($module_id, $name, $def="", $site=false)
 	{
-		return CPageOption::GetOptionString($module_id, $name, $def, $site);
+		return (int)CPageOption::GetOptionString($module_id, $name, $def, $site);
 	}
 
 	public static function SetOptionInt($module_id, $name, $value="", $desc="", $site="")

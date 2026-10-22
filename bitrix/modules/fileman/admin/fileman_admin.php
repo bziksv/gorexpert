@@ -626,7 +626,7 @@ while($Elem = $db_DirContent->NavNext(true, "f_"))
 	{
 		//$row->AddField("NAME", $showField, $editField);
 		$row->AddViewField("NAME",$showField);
-		$row->AddInputField("NAME", Array('size'=>'40', name => 'FIELDS['.$f_NAME.'][NAME]', 'value' => htmlspecialcharsbx($val)));
+		$row->AddInputField("NAME", Array('size'=>'40', 'name' => 'FIELDS['.$f_NAME.'][NAME]', 'value' => htmlspecialcharsbx($val)));
 	}
 
 

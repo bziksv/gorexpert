@@ -4427,7 +4427,7 @@ JS;
 		return $scriptsList;
 	}
 
-	private function _loadExt($ext, $bReturn)
+	private static function _loadExt($ext, $bReturn)
 	{
 		$ret = '';
 
@@ -4500,7 +4500,7 @@ JS;
 		return self::$arRegisteredExt[$ext];
 	}
 
-	private function _RegisterStandardExt()
+	private static function _RegisterStandardExt()
 	{
 		require_once($_SERVER['DOCUMENT_ROOT'].BX_ROOT.'/modules/main/jscore.php');
 	}
