@@ -4,6 +4,11 @@ if($arResult["DISPLAY_PROPERTIES"]["GAL_ID"]["VALUE"] > 0)
     $arResult["GAL_ID"] = $arResult["DISPLAY_PROPERTIES"]["GAL_ID"]["VALUE"];
 unset($arResult["DISPLAY_PROPERTIES"]["GAL_ID"]);
 
+$arResult["LINKED"] = array(
+	"NAME" => "",
+	"ELEMENTS" => array(),
+);
+
 if(is_numeric($arResult["ID"]) && $arResult["ID"] && CModule::IncludeModule("iblock"))
 {
     $res = CIBlock::GetByID($arResult["IBLOCK_ID"]);
@@ -24,8 +29,9 @@ foreach($arResult["LINKED"]["ELEMENTS"] as &$element)
     if($arFile)
       $element["PREVIEW_PICTURE"] = $arFile["SRC"];
 }
+unset($element);
 
 $component = $this->__component;
-$component->$arResult = $arResult;
+$component->arResult = $arResult;
 $component->SetResultCacheKeys(array("LINKED", "GAL_ID")); 
 ?>

@@ -46,7 +46,7 @@ if($arResult["GAL_ID"] && is_numeric($arResult["GAL_ID"]))
 */?>
 <?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 
-if(count($arResult["LINKED"]["ELEMENTS"]))
+if(!empty($arResult["LINKED"]["ELEMENTS"]) && is_array($arResult["LINKED"]["ELEMENTS"]))
 {
 ?>
 	<p style="margin-top:20px;"><strong>Другие статьи:</strong></p>
