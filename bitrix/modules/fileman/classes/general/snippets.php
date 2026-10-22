@@ -46,7 +46,7 @@ class CSnippets
 		}
 	}
 
-	function HandleForTemplate($template, &$arSNIPPETS, &$arTemplateKeys)
+	public static function HandleForTemplate($template, &$arSNIPPETS, &$arTemplateKeys)
 	{
 		$arTemplateKeys[$template] = Array();
 		CSnippets::ReadDir($arSNIPPETS, $arTemplateKeys[$template], "", $template);
@@ -55,7 +55,7 @@ class CSnippets
 			CSnippets::UpdateContentInfo($arSNIPPETS, $arTemplateKeys[$template], $template);
 	}
 
-	function ReadDir(&$arSNIPPETS, &$arKeys, $path, $template, $level = 0, $parent = "")
+	public static function ReadDir(&$arSNIPPETS, &$arKeys, $path, $template, $level = 0, $parent = "")
 	{
 		$basePath = self::GetBasePath($template);
 		$io = CBXVirtualIo::GetInstance();
@@ -137,7 +137,7 @@ class CSnippets
 		}
 	}
 
-	function UpdateContentInfo(&$ar, &$arKeys, $template)
+	public static function UpdateContentInfo(&$ar, &$arKeys, $template)
 	{
 		$basePath = self::GetBasePath($template);
 
@@ -159,27 +159,27 @@ class CSnippets
 		}
 	}
 
-	function WriteHtaccess($path)
+	public static function WriteHtaccess($path)
 	{
 		$io = CBXVirtualIo::GetInstance();
 		if($io->DirectoryExists($path) && !$io->FileExists($path."/.htaccess"))
 			$GLOBALS['APPLICATION']->SaveFileContent($path."/.htaccess", "Allow from All");
 	}
 
-	function ClearCache()
+	public static function ClearCache()
 	{
 		global $CACHE_MANAGER;
 		$CACHE_MANAGER->Clean("fileman_snippet_array");
 		$CACHE_MANAGER->Clean("fileman_snippet_group");
 	}
 
-	function GetCode($path)
+	public static function GetCode($path)
 	{
 		$io = CBXVirtualIo::GetInstance();
 		return $io->FileExists($path) ? $GLOBALS['APPLICATION']->GetFileContent($path) : '';
 	}
 
-	function Edit($Params)
+	public static function Edit($Params)
 	{
 		global $APPLICATION;
 		$name = CFileMan::SecurePathVar($Params['name']);
@@ -288,7 +288,7 @@ class CSnippets
 		}
 	}
 
-	function Delete($Params)
+	public static function Delete($Params)
 	{
 		global $APPLICATION;
 
@@ -337,7 +337,7 @@ window.operation_success = true;
 <?
 	}
 
-	function CheckFile($params)
+	public static function CheckFile($params)
 	{
 		$basePath = self::GetBasePath($params['template']);
 		return file_exists(CFileMan::SecurePathVar($basePath.'/'.$params['path']));
@@ -385,7 +385,7 @@ window.operation_success = true;
 
 	}
 
-	function InspectDir(&$arSnGroups, $path, $template, $level = 0, $parent = '')
+	public static function InspectDir(&$arSnGroups, $path, $template, $level = 0, $parent = '')
 	{
 		$io = CBXVirtualIo::GetInstance();
 		$basePath = self::GetBasePath($template);
@@ -418,7 +418,7 @@ window.operation_success = true;
 		}
 	}
 
-	function GetDefaultFileName($path)
+	public static function GetDefaultFileName($path)
 	{
 		$io = CBXVirtualIo::GetInstance();
 		for ($i = 1; $i <= 9999; $i++)
@@ -430,7 +430,7 @@ window.operation_success = true;
 		return $name;
 	}
 
-	function DisplayJSGroups($template, $ar = array())
+	public static function DisplayJSGroups($template, $ar = array())
 	{
 		$template = CUtil::JSEscape(htmlspecialcharsex($template));
 		$basePath = self::GetBasePath($template);

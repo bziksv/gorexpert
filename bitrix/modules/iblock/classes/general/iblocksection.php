@@ -8,7 +8,7 @@ class CAllIBlockSection
 	protected static $arSectionPathCache = array();
 	protected static $arSectionNavChainCache = array();
 
-	function GetFilter($arFilter=Array())
+	public static function GetFilter($arFilter=Array())
 	{
 		global $DB;
 		$arIBlockFilter = Array();
@@ -2112,7 +2112,7 @@ class CAllIBlockSection
 	 * @param bool|array $arSelectedFields
 	 * @return CDBResult
 	 */
-	function GetMixedList($arOrder=Array("SORT"=>"ASC"), $arFilter=Array(), $bIncCnt = false, $arSelectedFields = false)
+	public static function GetMixedList($arOrder=Array("SORT"=>"ASC"), $arFilter=Array(), $bIncCnt = false, $arSelectedFields = false)
 	{
 		global $DB;
 
@@ -2144,8 +2144,7 @@ class CAllIBlockSection
 		if(array_key_exists("SECTION_ID", $arFilter))
 			$arSectionFilter["SECTION_ID"] = $arFilter["SECTION_ID"];
 
-		$obSection = new CIBlockSection;
-		$rsSection = $obSection->GetList($arOrder, $arSectionFilter, $bIncCnt);
+		$rsSection = CIBlockSection::GetList($arOrder, $arSectionFilter, $bIncCnt);
 		while($arSection = $rsSection->Fetch())
 		{
 			$arSection["TYPE"]="S";

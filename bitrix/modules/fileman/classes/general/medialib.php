@@ -1454,6 +1454,9 @@ window.MLSearchResult = [
 	{
 		global $DB;
 
+		if (!is_array($arConfigTypes))
+			$arConfigTypes = array();
+
 		if (self::$bCache)
 		{
 			$cache = new CPHPCache;
@@ -1516,6 +1519,9 @@ window.MLSearchResult = [
 				));
 			}
 		}
+
+		if (!is_array($arMLTypes))
+			$arMLTypes = array();
 
 		$result = array();
 		if (count($arConfigTypes) > 0)
