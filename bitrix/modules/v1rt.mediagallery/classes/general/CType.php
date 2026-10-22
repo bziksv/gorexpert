@@ -4,7 +4,7 @@ IncludeModuleLangFile(__FILE__);
 
 class CType
 {
-    function GetUserTypeDescription()
+    public static function GetUserTypeDescription()
     {
         return array(
             'PROPERTY_TYPE'         => 'N',
@@ -16,7 +16,7 @@ class CType
         );
     }
         
-    function GetPropertyFieldHtml($arProperty, $value, $strHTMLControlName)
+    public static function GetPropertyFieldHtml($arProperty, $value, $strHTMLControlName)
     {
         \CModule::IncludeModule("v1rt.mediagallery");
         $gals = \V1rt\Media\CMediaGallery::collections();
@@ -34,7 +34,7 @@ class CType
         return  $return;
     }
         
-    function ConvertToDB($arProperty, $value)
+    public static function ConvertToDB($arProperty, $value)
     {
         $return = array();
         if(is_numeric($value['VALUE']))
@@ -44,7 +44,7 @@ class CType
         return $return;
     }
         
-    function ConvertFromDB($arProperty, $value)
+    public static function ConvertFromDB($arProperty, $value)
     {
         $return = array();
         if(is_numeric($value['VALUE']))

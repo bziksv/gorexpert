@@ -1380,7 +1380,7 @@ class CAllIBlockElement
 		return $arSqlSearch;
 	}
 
-	function MkPropertyFilter($res, $cOperationType, $propVAL, $db_prop, &$arJoinProps, &$arSqlSearch)
+	public static function MkPropertyFilter($res, $cOperationType, $propVAL, $db_prop, &$arJoinProps, &$arSqlSearch)
 	{
 		global $DB;
 
@@ -1615,7 +1615,7 @@ class CAllIBlockElement
 		}
 	}
 
-	function MkPropertyOrder($by, $order, $bSort, $db_prop, &$arJoinProps, &$arSqlOrder)
+	public static function MkPropertyOrder($by, $order, $bSort, $db_prop, &$arJoinProps, &$arSqlOrder)
 	{
 		if($bSort && $db_prop["PROPERTY_TYPE"] != "L")
 			return;
@@ -1845,7 +1845,7 @@ class CAllIBlockElement
 
 	}
 
-	function MkPropertyGroup($db_prop, &$arJoinProps, $bSort = false)
+	public static function MkPropertyGroup($db_prop, &$arJoinProps, $bSort = false)
 	{
 		if($db_prop["VERSION"] == 2 && $db_prop["MULTIPLE"]=="N")
 		{
@@ -1904,7 +1904,7 @@ class CAllIBlockElement
 		}
 	}
 
-	function MkPropertySelect($PR_ID, $db_prop, &$arIBlockLongProps, &$arIBlockConvProps, &$arJoinProps, &$arIBlockMultProps, &$arIBlockNumProps, $bWasGroup, $sGroupBy, &$sSelect, $bSort = false)
+	public static function MkPropertySelect($PR_ID, $db_prop, &$arIBlockLongProps, &$arIBlockConvProps, &$arJoinProps, &$arIBlockMultProps, &$arIBlockNumProps, $bWasGroup, $sGroupBy, &$sSelect, $bSort = false)
 	{
 		global $DB, $DBType;
 
@@ -2485,7 +2485,7 @@ class CAllIBlockElement
 		}
 	}
 
-	function MkAlias($max_alias_len, $alias, &$arIBlockLongProps)
+	public static function MkAlias($max_alias_len, $alias, &$arIBlockLongProps)
 	{
 		if($max_alias_len && strlen($alias) > $max_alias_len)
 		{

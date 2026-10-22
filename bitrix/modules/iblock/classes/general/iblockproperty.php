@@ -17,7 +17,7 @@ class CAllIBlockProperty
 		";
 
 		$bJoinIBlock = false;
-		$arSqlSearch = "";
+		$arSqlSearch = array();
 		foreach($arFilter as $key => $val)
 		{
 			$val = $DB->ForSql($val);
