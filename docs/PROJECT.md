@@ -59,6 +59,12 @@ Host gorexpert
 Сайт на проде — git-репозиторий с remote `https://github.com/bziksv/gorexpert`.  
 Пользователь веб-сервера / PHP: **`gorexpert:gorexpert`**.
 
+> **Ловушка (2026-10):** часто правят прод **точечно** (`pscp`/`scp` отдельных файлов), а `git push origin` не делают. Тогда диск прода **впереди** GitHub.  
+> `git reset --hard origin/main` в таком состоянии **откатит рабочие фиксы** (например PHP 8.2 админки). Перед full-reset: сверить `git log` / md5 с продом и что все задеплоенные коммиты запушены.  
+> Рабочий рецепт точечного деплоя с Windows/Cursor: `_cursor/LOCAL_DEV.md` → раздел «Деплой».
+
+#### Full deploy через git (когда origin = то, что должно быть на проде)
+
 ```bash
 ssh root@45.90.35.63
 cd /var/www/gorexpert/data/www/gorexpert.ru
