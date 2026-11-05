@@ -2405,7 +2405,7 @@ class CSiteCheckerTest
 
 	public static function CommonTest()
 	{
-		if (defined('BX_CRONTAB') || (defined('CHK_EVENT') && CHK_EVENT === true) || !$_SERVER['HTTP_HOST']) // can't get real HTTP server vars from cron
+		if (defined('BX_CRONTAB') || (defined('CHK_EVENT') && CHK_EVENT === true) || empty($_SERVER['HTTP_HOST'])) // can't get real HTTP server vars from cron
 			return "CSiteCheckerTest::CommonTest();";
 		if (($ntlm_varname = COption::GetOptionString('ldap', 'ntlm_varname', 'REMOTE_USER')) && ($user = trim($_SERVER[$ntlm_varname])))
 			return "CSiteCheckerTest::CommonTest();"; // Server NTLM is enabled, no way to connect through a socket
@@ -2419,9 +2419,9 @@ class CSiteCheckerTest
 				$ar = $oTest->arTestVars;
 			$oTest = new CSiteCheckerTest($step, $fast = 1);
 			$oTest->arTestVars = $ar;
-			$oTest->host = $_SERVER['HTTP_HOST'] ? $_SERVER['HTTP_HOST'] : 'localhost';
-			$oTest->ssl = $_SERVER['HTTPS'] == 'on' || $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https' || $_SERVER["SERVER_PORT"] == 443;
-			$oTest->port = $_SERVER['SERVER_PORT'] ? $_SERVER['SERVER_PORT'] : ($oTest->ssl ? 443 : 80);
+			$oTest->host = !empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost';
+			$oTest->ssl = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') || (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') || (!empty($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == 443);
+			$oTest->port = !empty($_SERVER['SERVER_PORT']) ? $_SERVER['SERVER_PORT'] : ($oTest->ssl ? 443 : 80);
 			$oTest->Start();
 			if ($oTest->result === false)
 			{

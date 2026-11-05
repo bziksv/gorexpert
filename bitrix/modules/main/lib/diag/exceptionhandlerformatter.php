@@ -55,7 +55,7 @@ class ExceptionHandlerFormatter
 		}
 
 		if ($htmlMode)
-			$result = '<pre>'.$result.'</pre>';
+			$result = '<style>html,body{background:#ffffff !important;color:#111111 !important;margin:0;padding:16px}pre{background:#ffffff !important;color:#111111 !important;white-space:pre-wrap;margin:0}</style><pre>'.$result.'</pre>';
 		else
 			$result .= static::DELIMITER;
 

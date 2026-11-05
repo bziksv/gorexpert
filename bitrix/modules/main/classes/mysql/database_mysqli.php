@@ -44,7 +44,16 @@ class CDatabase extends CDatabaseMysql
 
 	protected function QueryInternal($strSql)
 	{
-		return mysqli_query($this->db_Conn, $strSql, MYSQLI_STORE_RESULT);
+		try
+		{
+			return mysqli_query($this->db_Conn, $strSql, MYSQLI_STORE_RESULT);
+		}
+		catch (\mysqli_sql_exception $e)
+		{
+			// PHP 8+: mysqli throws; Bitrix expects false + GetError() when ignoreErrors=true
+			$this->db_Error = "[".$e->getCode()."] ".$e->getMessage();
+			return false;
+		}
 	}
 
 	protected function GetError()

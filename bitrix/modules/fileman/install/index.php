@@ -15,6 +15,11 @@ Class fileman extends CModule
 	var $MODULE_CSS;
 	var $MODULE_GROUP_RIGHTS = "Y";
 
+	function __construct()
+	{
+		$this->fileman();
+	}
+
 	function fileman()
 	{
 		$arModuleVersion = array();

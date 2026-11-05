@@ -2194,7 +2194,7 @@ BX.Fix(right_bar, {type: 'right', limit_node: BX.previousSibling(right_bar)});
 		return '';
 	}
 
-	function GetActiveClassByID($icon_id = '')
+	function GetActiveClassByID($icon_id = null)
 	{
 		return 'adm-btn-active';
 	}
@@ -2264,9 +2264,9 @@ class CAdminContextMenuList extends CAdminContextMenu
 			return parent::GetClassByID($icon_id);
 	}
 
-	function GetActiveClassByID($icon_id = '')
+	function GetActiveClassByID($icon_id = null)
 	{
-		if (substr($icon_id, 0, 7) == 'btn_new')
+		if (substr((string)$icon_id, 0, 7) == 'btn_new')
 			return 'adm-btn-save-active';
 		else
 			return parent::GetActiveClassByID($icon_id);
@@ -2393,6 +2393,11 @@ class CAdminResult extends CDBResult
 	var $nInitialSize;
 	var $table_id;
 
+	public function __construct($res, $table_id)
+	{
+		$this->CAdminResult($res, $table_id);
+	}
+
 	public function CAdminResult($res, $table_id)
 	{
 		parent::CDBResult($res);
@@ -2407,7 +2412,7 @@ class CAdminResult extends CDBResult
 			$nPageSize = array();
 
 		$nPageSize["nPageSize"] = $nSize;
-		if($_REQUEST["mode"] == "excel")
+		if(isset($_REQUEST["mode"]) && $_REQUEST["mode"] == "excel")
 			$nPageSize["NavShowAll"] = true;
 
 		$this->nInitialSize = $nPageSize["nPageSize"];
@@ -3295,7 +3300,7 @@ class CAdminList
 			$arrays = array(&$_POST, &$_REQUEST);
 			foreach($arrays as $i => $array)
 			{
-				if(is_array($array["FIELDS"]))
+				if(isset($array["FIELDS"]) && is_array($array["FIELDS"]))
 				{
 					foreach($array["FIELDS"] as $id=>$fields)
 					{
@@ -3313,7 +3318,7 @@ class CAdminList
 					}
 				}
 			}
-			if(is_array($GLOBALS["FIELDS"]))
+			if(isset($GLOBALS["FIELDS"]) && is_array($GLOBALS["FIELDS"]))
 			{
 				foreach($GLOBALS["FIELDS"] as $id=>$fields)
 				{

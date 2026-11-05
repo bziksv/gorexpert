@@ -2002,7 +2002,7 @@ class CAllIBlockSection
 		return $cnt;
 	}
 
-	function UpdateSearch($ID, $bOverWrite=false)
+	public static function UpdateSearch($ID, $bOverWrite=false)
 	{
 		if(!CModule::IncludeModule("search")) return;
 
@@ -2226,7 +2226,7 @@ class CAllIBlockSection
 	///////////////////////////////////////////////////////////////////
 	// GetSectionElementsCount($ID, $arFilter=Array())
 	///////////////////////////////////////////////////////////////////
-	function GetSectionElementsCount($ID, $arFilter=Array())
+	public static function GetSectionElementsCount($ID, $arFilter=Array())
 	{
 		global $DB, $USER;
 
@@ -2438,7 +2438,7 @@ class CAllIBlockSection
 		return $strResult;
 	}
 
-	function GetCount($arFilter=Array())
+	public static function GetCount($arFilter=Array())
 	{
 		global $DB, $USER;
 

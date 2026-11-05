@@ -13,6 +13,11 @@ Class compression extends CModule
 	var $MODULE_DESCRIPTION;
 	var $MODULE_CSS;
 
+	function __construct()
+	{
+		$this->compression();
+	}
+
 	function compression()
 	{
 		$arModuleVersion = array();

@@ -20,7 +20,8 @@ if($USER->CanDoOperation('fileman_view_file_structure'))
 			$aMenu = Array();
 			if(count($siteList) <= 0)
 			{
-				$dbSitesList = CSite::GetList($b = "lendir", $o = "desc");
+				$b = "lendir"; $o = "desc";
+				$dbSitesList = CSite::GetList($b, $o);
 				$siteList = array();
 				while ($arSite = $dbSitesList->GetNext())
 				{
@@ -271,7 +272,8 @@ if($USER->CanDoOperation('fileman_view_file_structure'))
 	$arSites = Array();
 	$arSitesDR = Array();
 	$arSitesDR_ = Array();
-	$dbSitesList = CSite::GetList($b = "SORT", $o = "asc");
+	$b = "SORT"; $o = "asc";
+	$dbSitesList = CSite::GetList($b, $o);
 	while($arSites = $dbSitesList->GetNext())
 	{
 		$arSite[] = $arSites;

@@ -732,14 +732,14 @@ class CPasswordStorage
 {
 	const SIGN = 'CACHE_';
 
-	function Init()
+	public static function Init()
 	{
 		if (!function_exists('mcrypt_encrypt'))
 			return false;
 		return true;
 	}
 
-	function getEncryptKey()
+	public static function getEncryptKey()
 	{
 		static $LICENSE_KEY;
 
@@ -1068,7 +1068,7 @@ class CTar
 
 	function openNext($bIgnoreOpenNextError)
 	{
-		if (file_exists($file = $this->getNextName()))
+		if (file_exists($file = self::getNextName($this->file)))
 		{
 			$this->close();
 			return $this->open($file,$this->mode);
@@ -1175,7 +1175,7 @@ class CTar
 
 		if ($this->ArchiveSizeCurrent >= $this->ArchiveSizeLimit)
 		{
-			$file = $this->getNextName();
+			$file = self::getNextName($this->file);
 			$this->close();
 
 			if (!$this->open($file,$this->mode))
@@ -1361,10 +1361,10 @@ class CTar
 		clearstatcache();
 	}
 
-	function getNextName($file = '')
+	public static function getNextName($file = '')
 	{
-		if (!$file)
-			$file = $this->file;
+		if ($file === '' || $file === null)
+			return '';
 
 		static $CACHE;
 		$c = &$CACHE[$file];

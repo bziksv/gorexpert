@@ -15,14 +15,14 @@
 
 @ini_set("track_errors", "1");
 @ini_set('display_errors', 1);
-error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT);
+error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING & ~E_STRICT & ~E_DEPRECATED);
 $message = null;
 
 define('DEBUG_FLAG', str_replace('\\','/',$_SERVER['DOCUMENT_ROOT'] . '/bitrix/site_checker_debug'));
 require($_SERVER['DOCUMENT_ROOT'].'/bitrix/modules/main/classes/general/site_checker.php');
 
 // NO AUTH TESTS
-if ($_REQUEST['unique_id'])
+if (!empty($_REQUEST['unique_id']))
 {
 	if (!file_exists(DEBUG_FLAG) && $_REQUEST['unique_id'] != checker_get_unique_id())
 		die('Permission denied: UNIQUE ID ERROR');
@@ -235,11 +235,11 @@ if ($_REQUEST['unique_id'])
 			}
 		}
 
-		$oTest = new CSiteCheckerTest($_REQUEST['step'], 0, $fix_mode);
+		$oTest = new CSiteCheckerTest(isset($_REQUEST['step']) ? $_REQUEST['step'] : 0, 0, $fix_mode);
 		if (file_exists(DEBUG_FLAG))
 			$oTest->timeout = 30;
 
-		if ($_REQUEST['global_test_vars'] && ($d = base64_decode($_REQUEST['global_test_vars'])))
+		if (!empty($_REQUEST['global_test_vars']) && ($d = base64_decode($_REQUEST['global_test_vars'])))
 			$oTest->arTestVars = unserialize($d);
 		else
 			$oTest->arTestVars = array();
@@ -278,7 +278,7 @@ if (file_exists(DEBUG_FLAG))
 	define("BX_COMPRESSION_DISABLED", true);
 }
 
-if($_REQUEST['test_start'])
+if(!empty($_REQUEST['test_start']))
 {
 	define("NO_KEEP_STATISTIC", true);
 	define("NO_AGENT_CHECK", true);
@@ -309,7 +309,7 @@ if ($_POST['access_check'])
 		$ob = new CSearchFiles;
 		$ob->TimeLimit = 10;
 
-		if ($_REQUEST['break_point'])
+		if (!empty($_REQUEST['break_point']))
 			$ob->SkipPath = $_REQUEST['break_point'];
 
 		$check_type = $_REQUEST['check_type'];
@@ -393,12 +393,12 @@ if ($_POST['access_check'])
 		echo '<h1>Permission denied: BITRIX SESSID ERROR</h1>';
 	exit;
 }
-elseif($_REQUEST['test_start'])
+elseif(!empty($_REQUEST['test_start']))
 {
 	if (defined('NOT_CHECK_PERMISSIONS') && NOT_CHECK_PERMISSIONS ===true || check_bitrix_sessid())
 	{
-		$oTest = new CSiteCheckerTest($_REQUEST['step'], (int) $_REQUEST['fast']);
-		if ($_REQUEST['global_test_vars'] && ($d = base64_decode($_REQUEST['global_test_vars'])))
+		$oTest = new CSiteCheckerTest(isset($_REQUEST['step']) ? $_REQUEST['step'] : 0, (int)(isset($_REQUEST['fast']) ? $_REQUEST['fast'] : 0));
+		if (!empty($_REQUEST['global_test_vars']) && ($d = base64_decode($_REQUEST['global_test_vars'])))
 		{
 			if (!CheckSerializedData($d))
 				die('Error unserialize');
@@ -435,7 +435,7 @@ elseif($_REQUEST['test_start'])
 		echo '<h1>Permission denied: BITRIX SESSID ERROR</h1>';
 	exit;
 }
-elseif ($_REQUEST['read_log']) // after prolog to send correct charset
+elseif (!empty($_REQUEST['read_log'])) // after prolog to send correct charset
 {
 	$oTest = new CSiteCheckerTest();
 	$str = htmlspecialcharsEx(file_get_contents($_SERVER['DOCUMENT_ROOT'].$oTest->LogFile));
@@ -921,8 +921,8 @@ require($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/main/include/prolog_admin_aft
 			return (test_result == 1 ? '<span class="sc_success">' : test_result == 0 ? '<span class="sc_warning">' : '<span class="sc_error">') + text + '</span>';
 		}
 
-		<?=$_REQUEST['express_test'] ? 'window.setTimeout(\'ExpressTest("", true)\', 500);' : ''?>
-		<?=$_REQUEST['start_test'] ? 'window.setTimeout(\'set_start(1)\', 500);' : ''?>
+		<?=!empty($_REQUEST['express_test']) ? 'window.setTimeout(\'ExpressTest("", true)\', 500);' : ''?>
+		<?=!empty($_REQUEST['start_test']) ? 'window.setTimeout(\'set_start(1)\', 500);' : ''?>
 	</script>
 
 <?

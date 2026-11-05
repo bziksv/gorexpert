@@ -798,7 +798,7 @@ $aTabs = array(
 if(!IsModuleInstalled("controller"))
 	$aTabs[] = array("DIV" => "fedit4", "TAB" => GetMessage("MAIN_OPTION_CONTROLLER_TAB"), "ICON" => "main_settings", "TITLE" => GetMessage("MAIN_OPTION_CONTROLLER_TAB_TITLE"));
 
-$diskSpace = COption::GetOptionInt("main", "disk_space")*1024*1024;
+$diskSpace = (int)COption::GetOptionInt("main", "disk_space")*1024*1024;
 if ($diskSpace > 0)
 {
 	$aTabs[] = array("DIV" => "fedit3", "TAB" => GetMessage("MAIN_TAB_7"), "ICON" => "main_settings", "TITLE" => GetMessage("MAIN_OPTION_DISC_SPACE"));

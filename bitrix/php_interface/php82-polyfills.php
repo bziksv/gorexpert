@@ -55,3 +55,37 @@ if (!function_exists('create_function')) {
 		return $name;
 	}
 }
+
+/**
+ * Force white page background in admin so Cursor/Electron screenshots
+ * don't render transparent fatal/empty responses as solid black.
+ */
+if (
+	PHP_SAPI !== 'cli'
+	&& !defined('BX_GX_FORCE_WHITE_BG')
+	&& isset($_SERVER['REQUEST_URI'])
+	&& strpos($_SERVER['REQUEST_URI'], '/bitrix/admin/') !== false
+) {
+	define('BX_GX_FORCE_WHITE_BG', true);
+	ob_start(static function ($buf) {
+		if ($buf === false || $buf === null) {
+			$buf = '';
+		}
+		$trim = ltrim($buf);
+		if ($trim !== '' && (stripos($trim, '<pre>') === 0 || stripos($trim, '<pre ') === 0)) {
+			return '<style>html,body,pre{background:#ffffff!important;color:#111111!important;margin:0;padding:16px;white-space:pre-wrap}</style>'.$buf;
+		}
+		if ($buf !== '' && stripos($buf, 'data-gx-force-bg') === false && stripos($buf, '<head') !== false) {
+			$replaced = preg_replace(
+				'/<head(\s[^>]*)?>/i',
+				'<head$1><style data-gx-force-bg>html,body{background:#ffffff!important}</style>',
+				$buf,
+				1
+			);
+			if (is_string($replaced)) {
+				$buf = $replaced;
+			}
+		}
+		return $buf;
+	});
+}

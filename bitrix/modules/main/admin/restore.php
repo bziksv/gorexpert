@@ -2294,7 +2294,7 @@ class CTar
 
 	function openNext($bIgnoreOpenNextError)
 	{
-		if (file_exists($file = $this->getNextName()))
+		if (file_exists($file = self::getNextName($this->file)))
 		{
 			$this->close();
 			return $this->open($file,$this->mode);
@@ -2401,7 +2401,7 @@ class CTar
 
 		if ($this->ArchiveSizeCurrent >= $this->ArchiveSizeLimit)
 		{
-			$file = $this->getNextName();
+			$file = self::getNextName($this->file);
 			$this->close();
 
 			if (!$this->open($file,$this->mode))
@@ -2581,10 +2581,10 @@ class CTar
 			fclose($this->res);
 	}
 
-	function getNextName($file = '')
+	public static function getNextName($file = '')
 	{
-		if (!$file)
-			$file = $this->file;
+		if ($file === '' || $file === null)
+			return '';
 
 		static $CACHE;
 		$c = &$CACHE[$file];

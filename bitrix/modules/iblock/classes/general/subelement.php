@@ -1149,7 +1149,7 @@ function CAdminSubContextMenu($items, $additional_items = array())
 		return '';
 	}
 
-	function GetActiveClassByID($icon_id)
+	function GetActiveClassByID($icon_id = null)
 	{
 		return 'adm-btn-active';
 	}
@@ -1172,9 +1172,9 @@ class CAdminSubContextMenuList extends CAdminSubContextMenu
 			return parent::GetClassByID($icon_id);
 	}
 
-	function GetActiveClassByID($icon_id)
+	function GetActiveClassByID($icon_id = null)
 	{
-		if (substr($icon_id, 0, 7) == 'btn_sub_new')
+		if (substr((string)$icon_id, 0, 7) == 'btn_sub_new')
 			return 'adm-btn-save-active';
 		else
 			return parent::GetActiveClassByID($icon_id);

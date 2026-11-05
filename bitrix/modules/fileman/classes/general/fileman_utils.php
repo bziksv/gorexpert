@@ -20,7 +20,7 @@ class CFilemanUtils
 			$arLangArray[] = 'pack';
 
 		$arSites = Array();
-		$dbSitesList = CSite::GetList($b = "SORT", $o = "asc");
+		$dbSitesList = CSite::GetList("SORT", "asc");
 		while($arSite = $dbSitesList->GetNext())
 		{
 			$arSites[] = array(
@@ -1046,7 +1046,7 @@ CAdminFileDialog::ShowScript(Array
 //
 class CFilemanSearch
 {
-	function Init($Params)
+	public static function Init($Params)
 	{
 		$this->maxFileOpenSize = 1024 * COption::GetOptionString("fileman", "search_max_open_file_size", 1024);
 		$this->maxResultCount = COption::GetOptionString("fileman", "search_max_res_count", false);
@@ -1156,7 +1156,7 @@ class CFilemanSearch
 		}
 	}
 
-	function Search($file)
+	public static function Search($file)
 	{
 		global $APPLICATION, $USER;
 
@@ -1310,12 +1310,12 @@ class CFilemanSearch
 		);
 	}
 
-	function CheckBreak()
+	public static function CheckBreak()
 	{
 		return time() - $this->startTime > CFilemanUtils::GetTimeout();
 	}
 
-	function trimPath($path, $docRoot = false)
+	public static function trimPath($path, $docRoot = false)
 	{
 		if ($docRoot === false)
 			$docRoot = $_SERVER["DOCUMENT_ROOT"];

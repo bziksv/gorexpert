@@ -23,7 +23,7 @@ if (!defined("US_SHARED_KERNEL_PATH"))
 
 class CUpdateSystem
 {
-	function IsInCommonKernel()
+	public static function IsInCommonKernel()
 	{
 		return (!defined("US_BITRIX24_MODE") || !US_BITRIX24_MODE) && file_exists($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/main/classes/general/update_db_updater.php");
 	}
@@ -3981,11 +3981,10 @@ class CUpdatesXMLNode
 		$retHash = array();
 
 		$retHash["@"] = array();
-		if (count($this->attributes) > 0)
+		if (is_array($this->attributes) && count($this->attributes) > 0)
 			foreach ($this->attributes as $attr)
 			{
 				$retHash["@"][$attr->name] = $attr->content;
-				$numAdded++;
 			}
 
 		$retHash["#"] = "";
@@ -3995,7 +3994,7 @@ class CUpdatesXMLNode
 		}
 		else
 		{
-			if (count($this->children)>0)
+			if (is_array($this->children) && count($this->children)>0)
 			{
 				$ar = array();
 				foreach ($this->children as $child)

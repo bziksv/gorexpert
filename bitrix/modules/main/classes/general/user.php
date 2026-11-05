@@ -454,7 +454,7 @@ abstract class CAllUser extends CDBResult
 				'SITE_ID' => $DB->ForSQL(trim($site_id), 2),
 				'~TIMESTAMP_X'=>$DB->CurrentTimeFunction()
 			);
-			CDatabase::Add("b_user_hit_auth", $arFields);
+			$DB->Add("b_user_hit_auth", $arFields);
 		}
 
 		return $hash;
@@ -635,7 +635,7 @@ abstract class CAllUser extends CDBResult
 								'~IP_ADDR'=>sprintf("%u", ip2long($_SERVER["REMOTE_ADDR"])),
 								'STORED_HASH'=>$hash
 							);
-						$stored_id = CDatabase::Add("b_user_stored_auth", $arFields);
+						$stored_id = $DB->Add("b_user_stored_auth", $arFields);
 					}
 					$_SESSION["SESS_AUTH"]["STORED_AUTH_ID"] = $stored_id;
 				}
@@ -721,6 +721,7 @@ abstract class CAllUser extends CDBResult
 			"PASSWORD" => &$password,
 			"REMEMBER" => &$remember,
 			"PASSWORD_ORIGINAL" => &$password_original,
+			"OTP" => "",
 		);
 
 		unset($_SESSION["SESS_OPERATIONS"]);
@@ -2035,7 +2036,8 @@ abstract class CAllUser extends CDBResult
 		}
 		else
 		{
-			$rs = CUser::GetList(($by="id"), ($order="asc"), array("ID_EQUAL_EXACT"=>intval($ID)), array("SELECT"=>array("UF_*")));
+			$by = "id"; $order = "asc";
+			$rs = CUser::GetList($by, $order, array("ID_EQUAL_EXACT"=>intval($ID)), array("SELECT"=>array("UF_*")));
 			if($userID > 0 && $ID == $userID)
 			{
 				self::$CURRENT_USER = array($rs->Fetch());
@@ -2048,7 +2050,8 @@ abstract class CAllUser extends CDBResult
 
 	public static function GetByLogin($LOGIN)
 	{
-		$rs = CUser::GetList(($by="id"), ($order="asc"), array("LOGIN_EQUAL_EXACT"=>$LOGIN), array("SELECT"=>array("UF_*")));
+		$by = "id"; $order = "asc";
+		$rs = CUser::GetList($by, $order, array("LOGIN_EQUAL_EXACT"=>$LOGIN), array("SELECT"=>array("UF_*")));
 		return $rs;
 	}
 
@@ -3856,7 +3859,8 @@ class CAllTask
 		if(CACHED_b_task !== false)
 			$CACHE_MANAGER->CleanDir("b_task");
 
-		$ID = CDatabase::Add("b_task", $arFields);
+		global $DB;
+		$ID = $DB->Add("b_task", $arFields);
 		return $ID;
 	}
 

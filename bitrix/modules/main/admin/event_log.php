@@ -318,7 +318,7 @@ while($db_res = $rsData->NavNext(true, "a_"))
 		case "FORUM_MESSAGE_MOVE":
 		case "FORUM_MESSAGE_EDIT":
 			if (intval($a_ITEM_ID) <= 0):
-				continue;
+				continue 2;
 			elseif (!array_key_exists($a_ITEM_ID, $arForumCache["MESSAGE"])):
 				CModule::IncludeModule("forum");
 				$res = CForumMessage::GetByID($a_ITEM_ID);
@@ -350,7 +350,7 @@ while($db_res = $rsData->NavNext(true, "a_"))
 		case "FORUM_TOPIC_MOVE":
 		case "FORUM_TOPIC_EDIT":
 			if (intval($a_ITEM_ID) <= 0):
-				continue;
+				continue 2;
 			elseif (!array_key_exists($a_ITEM_ID, $arForumCache["TOPIC"])):
 				CModule::IncludeModule("forum");
 				$res = CForumTopic::GetByID($a_ITEM_ID);

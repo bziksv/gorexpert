@@ -982,8 +982,8 @@ class CUpdateClientPartner
 						{
 							CUpdateClientPartner::AddMessage2Log(str_replace("#MODULE#", $dir, GetMessage("SUPP_GM_ERR_DMOD")), "Ux11");
 							$strError .= "[Ux11] ".str_replace("#MODULE#", $dir, GetMessage("SUPP_GM_ERR_DMOD")).". ";
-
-							return array();
+							// do not abort the whole partner update list because of one broken module
+							continue;
 						}
 						else
 						{
@@ -2138,9 +2138,24 @@ class CUpdateClientPartner
 	public static function __GetModuleInfo($path)
 	{
 		$arModuleVersion = array();
-//		include($path."/install/version.php");
-//		if (is_array($arModuleVersion) && array_key_exists("VERSION", $arModuleVersion))
-//			return $arModuleVersion;
+		if (file_exists($path."/install/version.php"))
+			include($path."/install/version.php");
+		if (is_array($arModuleVersion) && array_key_exists("VERSION", $arModuleVersion) && strlen($arModuleVersion["VERSION"]) > 0)
+		{
+			$arr = explode("/", $path);
+			$i = array_search("modules", $arr);
+			$module_code = $arr[$i+1];
+			$class_name = str_replace(".", "_", $module_code);
+			$result = array(
+				"VERSION" => $arModuleVersion["VERSION"],
+				"VERSION_DATE" => isset($arModuleVersion["VERSION_DATE"]) ? $arModuleVersion["VERSION_DATE"] : "",
+				"IS_DEMO" => ((defined($class_name."_DEMO") && constant($class_name."_DEMO")) ? "Y" : "N"),
+				"ACTIVE" => "Y",
+			);
+			if($result["IS_DEMO"] == "Y" && IsModuleInstalled($module_code) && CModule::IncludeModuleEx($module_code) == MODULE_DEMO_EXPIRED)
+				$result["ACTIVE"] = "N";
+			return $result;
+		}
 
 		include_once($path."/install/index.php");
 
@@ -2153,6 +2168,10 @@ class CUpdateClientPartner
 			return array();
 
 		$cls = new $class_name;
+		// PHP 8: old PHP4-style constructors (function ClassName) are not called
+		if ((!(isset($cls->MODULE_VERSION) && strlen($cls->MODULE_VERSION) > 0)) && method_exists($cls, $class_name))
+			$cls->{$class_name}();
+
 		$result = array(
 			"VERSION" => $cls->MODULE_VERSION,
 			"VERSION_DATE" => $cls->MODULE_VERSION_DATE,

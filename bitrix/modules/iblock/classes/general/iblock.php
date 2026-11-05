@@ -41,7 +41,7 @@ class CAllIBlock
 		return null;
 	}
 
-	function AddPanelButtons($mode, $componentName, $arButtons)
+	public static function AddPanelButtons($mode, $componentName, $arButtons)
 	{
 		/** @global CMain $APPLICATION */
 		global $APPLICATION;
@@ -1331,7 +1331,7 @@ class CAllIBlock
 		return true;
 	}
 
-	function SetPermission($IBLOCK_ID, $arGROUP_ID)
+	public static function SetPermission($IBLOCK_ID, $arGROUP_ID)
 	{
 		/** @global CDatabase $DB */
 		global $DB;
@@ -2543,7 +2543,7 @@ REQ
 		return CIBlock::ReplaceDetailUrl($url, $arr, $server_name, $arrType);
 	}
 
-	function _GetProductUrl($OF_ELEMENT_ID, $OF_IBLOCK_ID, $server_name = false, $arrType = false)
+	public static function _GetProductUrl($OF_ELEMENT_ID, $OF_IBLOCK_ID, $server_name = false, $arrType = false)
 	{
 		static $arIBlockCache = array();
 		static $arElementCache = array();
@@ -3054,7 +3054,7 @@ REQ
 		return $arResult;
 	}
 
-	function GetElementCount($iblock_id)
+	public static function GetElementCount($iblock_id)
 	{
 		/** @global CDatabase $DB */
 		global $DB;
@@ -3525,7 +3525,7 @@ REQ
 			return 'S';
 	}
 
-	function CheckForIndexes($IBLOCK_ID)
+	public static function CheckForIndexes($IBLOCK_ID)
 	{
 		global $DB;
 		$arIBlock = CIBlock::GetArrayByID($IBLOCK_ID);
@@ -3579,7 +3579,7 @@ REQ
 		return $result;
 	}
 
-	function _transaction_lock($IBLOCK_ID)
+	public static function _transaction_lock($IBLOCK_ID)
 	{
 		/** @global CDatabase $DB */
 		global $DB;
@@ -3587,7 +3587,7 @@ REQ
 		$DB->Query("UPDATE b_iblock set TMP_ID = '".md5(mt_rand())."' WHERE ID = ".$IBLOCK_ID);
 	}
 
-	function isShortDate($strDate)
+	public static function isShortDate($strDate)
 	{
 		$arDate = ParseDateTime($strDate, FORMAT_DATETIME);
 		unset($arDate["DD"]);
@@ -3608,7 +3608,7 @@ REQ
 		return false;
 	}
 
-	function _NotEmpty($column)
+	public static function _NotEmpty($column)
 	{
 		return "";
 	}

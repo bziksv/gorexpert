@@ -290,7 +290,7 @@ class CIBlock extends CAllIBlock
 		}
 	}
 
-	function _NotEmpty($column)
+	public static function _NotEmpty($column)
 	{
 		return "if(".$column." is null, 0, 1)";
 	}

@@ -529,8 +529,12 @@ class CControllerClient
 	{
 		static $arCachedData;
 		if(!isset($arCachedData) || $bRefresh)
-			$arCachedData = unserialize(COption::GetOptionString("main", "~controller_backup", ""));
-
+		{
+			$raw = COption::GetOptionString("main", "~controller_backup", "");
+			$arCachedData = (is_string($raw) && $raw !== "") ? @unserialize($raw) : array();
+			if(!is_array($arCachedData))
+				$arCachedData = array();
+		}
 		return $arCachedData;
 	}
 
@@ -792,10 +796,9 @@ class CControllerClient
 	public static function GetInstalledOptions($module_id)
 	{
 		$arOptions = CControllerClient::GetBackup();
-		$arOptions = $arOptions["options"][$module_id];
-		if(!is_array($arOptions))
+		if(!is_array($arOptions) || !isset($arOptions["options"]) || !is_array($arOptions["options"]) || !isset($arOptions["options"][$module_id]) || !is_array($arOptions["options"][$module_id]))
 			return Array();
-		return $arOptions;
+		return $arOptions["options"][$module_id];
 	}
 
 	public static function RunCommand($command, $oRequest, $oResponse)
@@ -1490,10 +1493,19 @@ function CControllerClientRequestTo($operation, $arParameters = Array())
 		return $oResponse;
 	}
 
-	function Send($page="/bitrix/admin/controller_ws.php")
+	// PHP 8+: must match parent Send($url, $page); legacy call sites use Send() / Send($page).
+	public function Send($url = "", $page = "/bitrix/admin/controller_ws.php")
 	{
+		if($page === "/bitrix/admin/controller_ws.php" && is_string($url) && $url !== "" && substr($url, 0, 1) === "/")
+		{
+			$page = $url;
+			$url = "";
+		}
+		if($url === "" || $url === null)
+			$url = COption::GetOptionString("main", "controller_url", "");
+
 		$this->Sign();
-		$oResponsePacket = parent::Send(COption::GetOptionString("main", "controller_url", ""), $page);
+		$oResponsePacket = parent::Send($url, $page);
 		if($oResponsePacket === false)
 			return false;
 

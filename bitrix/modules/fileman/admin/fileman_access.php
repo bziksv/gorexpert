@@ -48,6 +48,8 @@ $arPermTypes['NOT_REF'] = Array(
 
 $strWarning = "";
 $arFiles = Array();
+if (!isset($files) || !is_array($files))
+	$files = array();
 if (count($files) > 0)
 {
 	CUtil::decodeURIComponent($files);

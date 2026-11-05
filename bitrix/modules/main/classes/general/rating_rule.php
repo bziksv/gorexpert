@@ -430,7 +430,7 @@ class CRatingRule
 		return true;
 	}
 
-	function err_mess()
+	public static function err_mess()
 	{
 		return "<br>Class: CRatingRule<br>File: ".__FILE__;
 	}

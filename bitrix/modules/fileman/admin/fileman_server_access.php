@@ -27,7 +27,10 @@ $abs_path = $documentRoot.$path;
 $arFiles = Array();
 
 $bSearch = isset($_REQUEST['search']) && $_REQUEST['search'] == 'Y';
-$searchSess = preg_replace("/[^a-z0-9]/i", "", $_REQUEST['ssess']);
+$searchSess = preg_replace("/[^a-z0-9]/i", "", isset($_REQUEST['ssess']) ? $_REQUEST['ssess'] : '');
+
+if (!isset($files) || !is_array($files))
+	$files = array();
 
 if (CFileMan::IsWindows())
 	$strWarning .= GetMessage("FILEMAN_SA_WINDOWS_WARN")."\n";

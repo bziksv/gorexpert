@@ -469,7 +469,7 @@ class CCheckListResult
 		$arSqlWhereStr = '';
 		if (is_array($arFilter) && count($arFilter)>0)
 		{
-			$arSqlWhere = "";
+			$arSqlWhere = array();
 			$arSqlFields=array("ID", "REPORT", "HIDDEN", "SENDED_TO_BITRIX");
 			foreach($arFilter as $key => $value):
 				if (in_array($key, $arSqlFields))
