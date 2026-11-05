@@ -12,8 +12,9 @@
 | Медиа | `upload/` (medialibrary) |
 | Локальный URL | **http://127.0.0.1:8096/** |
 | Локальная БД | `gorexpert_local` @ `127.0.0.1` |
+| Локальный PHP | Homebrew **php@8.3** FPM (`:9096`) |
 | Git | [github.com/bziksv/gorexpert](https://github.com/bziksv/gorexpert) |
-| Prod | [gorexpert.ru](https://gorexpert.ru) |
+| Prod | [gorexpert.ru](https://gorexpert.ru) — PHP **8.3.6** |
 
 ### Бизнес-направления
 
@@ -28,27 +29,40 @@
 
 ## Сервер и окружения
 
-| Окружение | Домен | Путь на сервере | IP |
-|-----------|-------|-----------------|-----|
-| **Prod** | gorexpert.ru | `/var/www/gorexpert/data/www/gorexpert.ru` | 45.90.35.63 |
+| Окружение | Домен / URL | Путь | Хост |
+|-----------|-------------|------|------|
+| **Local** | http://127.0.0.1:8096/ | `gorexpert.ru/` (этот репозиторий) | Mac, nginx + php@8.3 FPM |
+| **Prod** | https://gorexpert.ru | `/var/www/gorexpert_ru_usr/data/www/gorexpert.ru` | **155.212.171.103** (`s3.prime-ltd.su`, FastPanel) |
+
+| Параметр prod | Значение |
+|---------------|----------|
+| SSH | `root@155.212.171.103` |
+| Веб-пользователь / PHP | **`gorexpert_ru_usr:gorexpert_ru_usr`** |
+| PHP | **8.3.6** |
+| БД | `gorexpert_ru` @ `localhost`, пользователь `gorexpert_ru` |
+| Git на диске сайта | **нет** (код не через `git pull` на сервере) |
+| Код в git | [github.com/bziksv/gorexpert](https://github.com/bziksv/gorexpert) — источник правды локально / в GitHub |
+
+> **Старый сервер:** `45.90.35.63`, путь `/var/www/gorexpert/data/www/gorexpert.ru`, пользователь `gorexpert` — **снят с эксплуатации** (SSH banner timeout, сайт перенесён).
 
 ### Правило работы
 
-> **Сейчас работаем только локально** (`http://127.0.0.1:8096/`).  
-> Деплой на prod — только по явной просьбе.
+> Правки делаем локально (`http://127.0.0.1:8096/`).  
+> Деплой на prod — только по явной просьбе.  
+> **Базу целиком с локалки на прод не выкатываем** (см. ниже).
 
 ### SSH-доступ
 
 ```bash
-ssh root@45.90.35.63
-# путь к сайту: /var/www/gorexpert/data/www/gorexpert.ru
+ssh root@155.212.171.103
+# путь к сайту: /var/www/gorexpert_ru_usr/data/www/gorexpert.ru
 ```
 
 Рекомендуемая запись в `~/.ssh/config`:
 
 ```
 Host gorexpert
-    HostName 45.90.35.63
+    HostName 155.212.171.103
     User root
     IdentityFile ~/.ssh/id_ed25519
     IdentitiesOnly yes
@@ -56,53 +70,38 @@ Host gorexpert
 
 ### Деплой на prod (по запросу)
 
-Сайт на проде — git-репозиторий с remote `https://github.com/bziksv/gorexpert`.  
-Пользователь веб-сервера / PHP: **`gorexpert:gorexpert`**.
+На проде **нет `.git`** — выкат файлов с локальной машины через **rsync/scp**, после `git push origin main` (чтобы GitHub не отставал от диска).
 
-> **Ловушка (2026-10):** часто правят прод **точечно** (`pscp`/`scp` отдельных файлов), а `git push origin` не делают. Тогда диск прода **впереди** GitHub.  
-> `git reset --hard origin/main` в таком состоянии **откатит рабочие фиксы** (например PHP 8.2 админки). Перед full-reset: сверить `git log` / md5 с продом и что все задеплоенные коммиты запушены.  
-> Рабочий рецепт точечного деплоя с Windows/Cursor: `_cursor/LOCAL_DEV.md` → раздел «Деплой».
+Пользователь веб-сервера: **`gorexpert_ru_usr`**. Секреты (`dbconn.php`, `.settings.php`, `license_key.php`, `upload/`) на сервере свои — **не перезаписывать** с локалки.
 
-#### Full deploy через git (когда origin = то, что должно быть на проде)
+#### Рабочий деплой патчей (рекомендуемый)
 
 ```bash
-ssh root@45.90.35.63
-cd /var/www/gorexpert/data/www/gorexpert.ru
+cd gorexpert.ru
+git push origin main   # сначала зафиксировать в GitHub
 
-git fetch origin main
-git reset --hard FETCH_HEAD
+# список файлов коммита или явный список патчей:
+git show --name-only --pretty=format: HEAD | grep -v '^$' > /tmp/gx_deploy_files.txt
 
-# ОБЯЗАТЕЛЬНО: git от root оставляет файлы root:root —
-# без этого Битрикс не сможет редактировать файлы в админке
-chown -R gorexpert:gorexpert /var/www/gorexpert/data/www/gorexpert.ru
-find . -type d -exec chmod 755 {} +
-find . -type f -exec chmod 644 {} +
-for d in bitrix/cache bitrix/managed_cache bitrix/stack_cache bitrix/html_pages bitrix/tmp upload; do
-  [ -d "$d" ] && find "$d" -type d -exec chmod 775 {} + && find "$d" -type f -exec chmod 664 {} +
-done
+rsync -avz --files-from=/tmp/gx_deploy_files.txt \
+  -e 'ssh -o BatchMode=yes' \
+  ./ root@155.212.171.103:/var/www/gorexpert_ru_usr/data/www/gorexpert.ru/
 
-rm -rf bitrix/cache/* bitrix/managed_cache/* bitrix/html_pages/*
-```
-
-Одной командой с локальной машины:
-
-```bash
-ssh root@45.90.35.63 'set -e
-SITE=/var/www/gorexpert/data/www/gorexpert.ru
-cd "$SITE"
-git fetch origin main && git reset --hard FETCH_HEAD
-chown -R gorexpert:gorexpert "$SITE"
-find "$SITE" -type d -exec chmod 755 {} +
-find "$SITE" -type f -exec chmod 644 {} +
-for d in bitrix/cache bitrix/managed_cache bitrix/stack_cache bitrix/html_pages bitrix/tmp upload; do
-  [ -d "$SITE/$d" ] && find "$SITE/$d" -type d -exec chmod 775 {} + && find "$SITE/$d" -type f -exec chmod 664 {} +
-done
-rm -rf bitrix/cache/* bitrix/managed_cache/* bitrix/html_pages/*
+ssh root@155.212.171.103 'set -e
+SITE=/var/www/gorexpert_ru_usr/data/www/gorexpert.ru
+chown -R gorexpert_ru_usr:gorexpert_ru_usr \
+  "$SITE/bitrix/modules" "$SITE/bitrix/panel" "$SITE/bitrix/php_interface" "$SITE/scripts"
+rm -rf "$SITE/bitrix/cache/"* "$SITE/bitrix/managed_cache/"* "$SITE/bitrix/html_pages/"*
 '
 ```
 
-> **Важно:** секреты (`dbconn.php`, `.settings.php`, `license_key.php`, `upload/`) в git не входят — на проде они остаются локальными и при `git reset` не затираются.  
-> Если после деплоя в админке «Проверка доступа» ругается на чтение/запись — почти всегда забыли `chown -R gorexpert:gorexpert`.
+> Если после деплоя в админке «Проверка доступа» ругается на чтение/запись — забыли `chown -R gorexpert_ru_usr:gorexpert_ru_usr`.
+
+#### База при деплое
+
+- **Полный дамп локальной БД на прод не льём** (потеряем боевые данные).
+- Схема/данные на проде живут своей жизнью (`gorexpert_ru`).
+- Исключение: точечные пустые служебные таблицы, если без них падает админка (например `b_utm_user` / `b_uts_user` для UF) — `CREATE TABLE IF NOT EXISTS`, без копирования строк с локалки.
 
 ---
 
@@ -144,17 +143,18 @@ bitrix/php_interface/           (after_connect.php, dbconn)
 | `arturgolubev.lazyload` | Ленивая загрузка изображений |
 | `prime.cleaner` | Очистка / обслуживание |
 
-### PHP 8.2 (локальный стек и патчи ядра)
+### PHP 8.3 (локальный стек, prod и патчи ядра)
 
-Локально: Homebrew **php@8.2** FPM. Битрикс 16.0.9 из коробки на 8.x не стартует — в репозитории лежит слой совместимости.
+Локально и на prod: **PHP 8.3**. Битрикс 16.0.9 из коробки на 8.x не стартует — в репозитории слой совместимости (полифиллы + патчи админки/ядра).
 
-Подробности: **[docs/PHP82.md](PHP82.md)**. Проверка: `./scripts/verify-php82.sh`.
+Подробности: **[docs/PHP82.md](PHP82.md)** (имя файла историческое; актуально для 8.2/8.3). Проверка: `./scripts/verify-php82.sh`.
 
 Кратко:
 
-- полифиллы: `bitrix/php_interface/php82-polyfills.php` (+ `init.php`)
-- `__construct` для PHP4-конструкторов в `bitrix/modules`
-- правки `$GLOBALS += …`, curly braces, nested ternary, `mktime()` → `time()`, `\Throwable` в exception handler
+- полифиллы: `bitrix/php_interface/php82-polyfills.php` (+ `init.php`); в админке — белый фон на fatal для скриншотов
+- `__construct` для PHP4-конструкторов; `public static` там, где Bitrix вызывал методы статически
+- mysqli: не бросать исключение при `$ignore_errors`; hardened `CControllerClient::GetBackup` / `Send`
+- update system / partner (Ux11), `event_log` (`continue 2`), `CTar::getNextName` static
 - патч `String` → `BinaryString` (PHP 7.1+)
 
 ---
@@ -209,15 +209,15 @@ gorexpert/                      — workspace (вне git)
 
 ## Локальная разработка
 
-Без Docker. Homebrew **nginx** + **PHP 8.2 FPM** (`php@8.2`) + **MySQL**.
+Без Docker. Homebrew **nginx** + **PHP 8.3 FPM** (`php@8.3`) + **MySQL**.
 
-> **Важно:** ядро Битрикс **16.0.9** требует патча `String` → `BinaryString` в `bitrix/modules/main/lib/text/` (уже применён локально) для работы на PHP 7.1+ / 8.x.
+> **Важно:** ядро Битрикс **16.0.9** требует патча `String` → `BinaryString` в `bitrix/modules/main/lib/text/` (уже применён) и патчей админки из `docs/PHP82.md` для PHP 8.x.
 
 ```bash
 cd gorexpert.ru
 cp .local/db.env.example .local/db.env
 ./scripts/setup-local-db.sh       # импорт ../gorexpert_ru.sql (один раз)
-./scripts/start-dev.sh            # nginx :8096 + php-fpm :9096
+./scripts/start-dev.sh            # nginx :8096 + php-fpm :9096 (PHP 8.3)
 ./scripts/stop-dev.sh             # остановка
 ```
 
@@ -295,8 +295,10 @@ cp .local/db.env.example .local/db.env
 |----------|------|-------|
 | Имя БД | `gorexpert_ru` | `gorexpert_local` |
 | Пользователь | `gorexpert_ru` | `gorexpert_local` |
-| Хост | `localhost` | `127.0.0.1` |
-| Дамп | — | `../gorexpert_ru.sql` (~2.4 MB) |
+| Хост | `localhost` (на сервере) | `127.0.0.1` |
+| Дамп | не выкатывать с локалки | `../gorexpert_ru.sql` (~2.4 MB) |
+
+Деплой кода ≠ деплой БД. Локальный дамп — только для поднятия dev.
 
 ---
 
@@ -304,8 +306,8 @@ cp .local/db.env.example .local/db.env
 
 | Дата | Что сделано |
 |------|-------------|
+| 2026-11-05 | Прод перенесён на **155.212.171.103** (`/var/www/gorexpert_ru_usr/...`, PHP 8.3.6, user `gorexpert_ru_usr`); деплой через rsync (на диске сайта нет git); локальный стек **php@8.3**; патчи админки Bitrix 16 под PHP 8.3; старый хост 45.90.35.63 снят |
 | 2026-08-23 | Первичная документация, `.gitignore`, `.cursorignore`, локальный dev :8096, скрипты в `scripts/`, патч `String`→`BinaryString` для PHP 7.4 |
-
 ### Шаблон записи
 
 ```markdown
