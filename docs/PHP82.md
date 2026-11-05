@@ -60,8 +60,8 @@ cd gorexpert.ru
 Перед выкатом патчей:
 
 1. `git push origin main`
-2. rsync нужных файлов на `/var/www/gorexpert_ru_usr/data/www/gorexpert.ru` (на диске сайта **нет** git)
-3. `chown -R gorexpert_ru_usr:gorexpert_ru_usr` на залитые пути + сброс `bitrix/cache`, `managed_cache`, `html_pages`
+2. На проде: `git fetch origin main && git reset --hard origin/main` (секреты `dbconn` / `.settings` / `license_key` сохранить и вернуть)
+3. `chown -R gorexpert_ru_usr:gorexpert_ru_usr` + сброс `bitrix/cache`, `managed_cache`, `html_pages`
 4. БД целиком не копировать; при необходимости только `CREATE TABLE IF NOT EXISTS` для пустых UF-таблиц (`b_utm_user`, `b_uts_user`)
 5. Smoke: админка `/bitrix/admin/`, `settings.php?mid=main`, `update_system.php`, `event_log.php`, `dump_list.php`
 

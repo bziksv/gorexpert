@@ -40,8 +40,8 @@
 | Веб-пользователь / PHP | **`gorexpert_ru_usr:gorexpert_ru_usr`** |
 | PHP | **8.3.6** |
 | БД | `gorexpert_ru` @ `localhost`, пользователь `gorexpert_ru` |
-| Git на диске сайта | **нет** (код не через `git pull` на сервере) |
-| Код в git | [github.com/bziksv/gorexpert](https://github.com/bziksv/gorexpert) — источник правды локально / в GitHub |
+| Git на диске сайта | **да** — `/var/www/gorexpert_ru_usr/data/www/gorexpert.ru/.git`, remote `origin` → GitHub |
+| Код в git | [github.com/bziksv/gorexpert](https://github.com/bziksv/gorexpert) — источник правды; prod = `origin/main` |
 
 > **Старый сервер:** `45.90.35.63`, путь `/var/www/gorexpert/data/www/gorexpert.ru`, пользователь `gorexpert` — **снят с эксплуатации** (SSH banner timeout, сайт перенесён).
 
@@ -70,33 +70,43 @@ Host gorexpert
 
 ### Деплой на prod (по запросу)
 
-На проде **нет `.git`** — выкат файлов с локальной машины через **rsync/scp**, после `git push origin main` (чтобы GitHub не отставал от диска).
+На проде есть git (`origin` → GitHub). Рабочий путь: **push локально → `git fetch` + `reset --hard origin/main` на сервере**.
 
-Пользователь веб-сервера: **`gorexpert_ru_usr`**. Секреты (`dbconn.php`, `.settings.php`, `license_key.php`, `upload/`) на сервере свои — **не перезаписывать** с локалки.
+Пользователь веб-сервера: **`gorexpert_ru_usr`**. Секреты (`dbconn.php`, `.settings.php`, `license_key.php`) и `upload/` **не в git** — на сервере свои; перед hard-reset при необходимости бэкапить, после — восстановить (если checkout их затёр).
 
-#### Рабочий деплой патчей (рекомендуемый)
+`git config --global --add safe.directory /var/www/gorexpert_ru_usr/data/www/gorexpert.ru` уже нужен, если деплой идёт от `root`.
+
+#### Full deploy через git
 
 ```bash
+# локально
 cd gorexpert.ru
-git push origin main   # сначала зафиксировать в GitHub
+git push origin main
 
-# список файлов коммита или явный список патчей:
-git show --name-only --pretty=format: HEAD | grep -v '^$' > /tmp/gx_deploy_files.txt
-
-rsync -avz --files-from=/tmp/gx_deploy_files.txt \
-  -e 'ssh -o BatchMode=yes' \
-  ./ root@155.212.171.103:/var/www/gorexpert_ru_usr/data/www/gorexpert.ru/
-
+# на проде
 ssh root@155.212.171.103 'set -e
 SITE=/var/www/gorexpert_ru_usr/data/www/gorexpert.ru
-chown -R gorexpert_ru_usr:gorexpert_ru_usr \
-  "$SITE/bitrix/modules" "$SITE/bitrix/panel" "$SITE/bitrix/php_interface" "$SITE/scripts"
-rm -rf "$SITE/bitrix/cache/"* "$SITE/bitrix/managed_cache/"* "$SITE/bitrix/html_pages/"*
+git config --global --add safe.directory "$SITE"
+cd "$SITE"
+# секреты (на всякий)
+SEC=/tmp/gx_secrets_$$; mkdir -p "$SEC"
+for f in bitrix/php_interface/dbconn.php bitrix/.settings.php bitrix/license_key.php; do
+  [ -e "$f" ] && mkdir -p "$SEC/$(dirname "$f")" && cp -a "$f" "$SEC/$f"
+done
+git fetch origin main
+git reset --hard origin/main
+for f in bitrix/php_interface/dbconn.php bitrix/.settings.php bitrix/license_key.php; do
+  [ -e "$SEC/$f" ] && cp -a "$SEC/$f" "$f"
+done
+rm -rf "$SEC"
+chown -R gorexpert_ru_usr:gorexpert_ru_usr "$SITE"
+rm -rf bitrix/cache/* bitrix/managed_cache/* bitrix/html_pages/*
 '
 ```
 
 > Если после деплоя в админке «Проверка доступа» ругается на чтение/запись — забыли `chown -R gorexpert_ru_usr:gorexpert_ru_usr`.
 
+Точечный rsync/scp — только аварийный обход, если GitHub/сеть недоступны.
 #### База при деплое
 
 - **Полный дамп локальной БД на прод не льём** (потеряем боевые данные).
@@ -306,7 +316,7 @@ cp .local/db.env.example .local/db.env
 
 | Дата | Что сделано |
 |------|-------------|
-| 2026-11-05 | Прод перенесён на **155.212.171.103** (`/var/www/gorexpert_ru_usr/...`, PHP 8.3.6, user `gorexpert_ru_usr`); деплой через rsync (на диске сайта нет git); локальный стек **php@8.3**; патчи админки Bitrix 16 под PHP 8.3; старый хост 45.90.35.63 снят |
+| 2026-11-05 | Прод **155.212.171.103** (`gorexpert_ru_usr`, PHP 8.3.6); на сайте подключён git → `origin/main`; локальный стек **php@8.3**; патчи админки Bitrix 16; старый хост 45.90.35.63 снят |
 | 2026-08-23 | Первичная документация, `.gitignore`, `.cursorignore`, локальный dev :8096, скрипты в `scripts/`, патч `String`→`BinaryString` для PHP 7.4 |
 ### Шаблон записи
 
